@@ -1,25 +1,24 @@
-import Koa from 'koa';
-import Router from 'koa-router';
-import bodyParser from 'koa-bodyparser';
-import cors from 'koa-cors';
+// index.js
 
-const app = new Koa();
-const router = new Router();
-const port = 5000; // Change the port if needed
+const express = require('express');
+const mysql = require('mysql2/promise');
+const cors = require('cors'); // Import CORS
+require('dotenv').config(); // To use environment variables from the .env file
 
-// Middleware
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// Middleware to parse JSON
+app.use(express.json());
 app.use(cors());
-app.use(bodyParser());
 
-// Test Route
-router.get('/test', async (ctx) => {
-  ctx.body = { message: 'Koa backend is working!' };
+// Test route
+app.get('/test', (req, res) => {
+  res.send('Welcome to the Express backend!');
 });
 
-// Apply routes
-app.use(router.routes()).use(router.allowedMethods());
 
-// Start server
-app.listen(port, () => {
-  console.log(`Koa server running on http://localhost:${port}`);
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Express server running on http://localhost:${PORT}`);
 });
