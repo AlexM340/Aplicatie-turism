@@ -5,6 +5,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "db-migrate-mysql": "^3.0.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "mysql": "^2.18.1",
