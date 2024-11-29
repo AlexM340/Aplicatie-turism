@@ -1,10 +1,11 @@
 import React, { Suspense } from "react";
 import LandingPage from "./LandingPage";
 import { Route, Routes } from "react-router-dom";
-import Test from "./Test";
 import Layout from "./Layout";
+import Test from "./Test";
+import SignUpPage from "./SignupPage";
 
-const Pages = () => {
+const Pages = ({ isLoggedIn, onLogin, onLogout }) => {
   const Pages = [
     {
       path: "home",
@@ -12,7 +13,7 @@ const Pages = () => {
     },
     {
       path: "test",
-      component: Test,
+      component: LandingPage,
     },
     {
       path: "oferte",
@@ -23,10 +24,14 @@ const Pages = () => {
       component: LandingPage,
     },
   ];
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route
+          path="/"
+          element={<Layout isLoggedIn={isLoggedIn} onLogout={onLogout} />}
+        >
           <Route index element={<LandingPage />} />
           {Pages.map((route, index) => (
             <Route
@@ -35,8 +40,10 @@ const Pages = () => {
               element={<route.component />}
             />
           ))}
+          <Route path="/login" element={<Test onLogin={onLogin} />} />
+          <Route path="/signup" element={<SignUpPage onSignUp={onLogin} />} />
         </Route>
-        <Route path="*" element={<h1>404</h1>} />
+        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
     </Suspense>
   );

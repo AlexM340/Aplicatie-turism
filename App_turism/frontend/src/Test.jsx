@@ -1,28 +1,34 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import LoginPage from "./LoginPage"; // Import the LoginPage component
 
-const Test = () => {
-  const [message, setMessage] = useState("");
-  console.log(message);
-  const handleClick = async (e) => {
-    try {
-      const response = await fetch("http://localhost:5000/test"); // Replace with your backend URL if different
-      if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.text();
-        // console.log(data);
-        setMessage(data);
-    } catch (err) {
-      setMessage("Error connecting to the backend");
+const Test = ({ onLogin }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate(); // To programmatically navigate
+
+  const handleLogin = (email, password) => {
+    // Simulate login logic with multiple emails and passwords
+    const validCredentials = [
+      { email: "guest@test.com", password: "12345" },
+      { email: "user@example.com", password: "password123" },
+    ];
+
+    const user = validCredentials.find(
+      (cred) => cred.email === email && cred.password === password
+    );
+
+    if (user) {
+      onLogin(); // Notify parent to update the login state
+      setErrorMessage("");
+      navigate("/"); // Redirect to the Landing Page (Home)
+    } else {
+      setErrorMessage("Invalid email or password");
     }
   };
-  return (
-    <>
-      <div>Salut</div>
-      <button onClick={handleClick}>test backend</button>
-      {message && <div>{message}</div>}
-    </>
-  );
+
+  return <LoginPage onLogin={handleLogin} errorMessage={errorMessage} />;
 };
 
 export default Test;
