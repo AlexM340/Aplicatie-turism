@@ -1,23 +1,6 @@
-// const mysql = require('mysql2');
-
-// //Creaza conexiunea
-
-// const conexiune = mysql.createConnection({
-//     host: '127.0.0.1',
-//     user: 'root',
-//     password: 'root',
-//     database: 'turism'
-// });
-
-// module.exports = conexiune;
-
-//Facem cu migrare
-
-const {Sequelize} = require('sequelize');
+const { Sequelize } = require('sequelize');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, 'dataBaseSettings.env') });
-
-//Configuram conexiunea
 
 const sequelize = new Sequelize(
     process.env.DB_NAME,
@@ -29,5 +12,10 @@ const sequelize = new Sequelize(
         port: process.env.DB_PORT || 3306,
     }
 );
+
+// Testează conexiunea
+sequelize.authenticate()
+  .then(() => console.log('Conexiunea la baza de date a fost realizată cu succes.'))
+  .catch(err => console.error('Nu s-a putut conecta la baza de date:', err));
 
 module.exports = sequelize;
