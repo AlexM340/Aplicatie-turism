@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../database'); // Importă conexiunea
 const Camere = require('./camere'); // Importă modelul Camere
 const Zboruri = require('./zboruri'); // Importă modelul Zboruri
-
+console.log("PAchetere")
 const Pachete = sequelize.define('Pachete', {
   id: {
     type: DataTypes.INTEGER,
@@ -38,12 +38,14 @@ const Pachete = sequelize.define('Pachete', {
     allowNull: false,
   }
 }, {
-  tableName: 'Pachete',  // Asigură-te că numele tabelei este corect
+  tableName: 'pachete',  // Asigură-te că numele tabelei este corect
 });
 
 // Testăm sincronizarea
 Pachete.sync()
-  .then(() => console.log('Tabelul pachete a fost sincronizat cu succes.'))
+  .then(
+    // () => console.log('Tabelul pachete a fost sincronizat cu succes.')
+  )
   .catch((error) => console.error('Eroare la sincronizarea tabelului pachete:', error));
 
 module.exports = Pachete;

@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../database'); 
-
+console.log("cazare");
 const Cazare = sequelize.define('Cazare', {
   id: {
     type: DataTypes.INTEGER,
@@ -29,7 +29,9 @@ const Cazare = sequelize.define('Cazare', {
 
 // Test sincronizare
 Cazare.sync()
-  .then(() => console.log('Tabelul cazare a fost sincronizat cu succes.'))
+  .then(
+    // () => console.log('Tabelul cazare a fost sincronizat cu succes.')
+  )
   .catch((error) => console.error('Eroare la sincronizarea tabelului cazare:', error));
 
 module.exports = Cazare;

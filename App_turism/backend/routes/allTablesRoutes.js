@@ -6,7 +6,7 @@ const { getCamere } = require('../controllers/allTablesController');
 const { getCazare } = require('../controllers/allTablesController');
 
 const router = express.Router();
-router.get(allTablesController.g)
+// router.get(allTablesController.g)
 
 router.get('/camere', getCamere);
 router.get('/cazare', getCazare);

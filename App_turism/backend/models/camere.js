@@ -36,7 +36,9 @@ const Camere = sequelize.define('Camere', {
 
 // Testam sincronizarea
 Camere.sync()
-  .then(() => console.log('Tabelul camere a fost sincronizat cu succes.'))
+  .then(
+    // () => console.log('Tabelul camere a fost sincronizat cu succes.')
+  )
   .catch((error) => console.error('Eroare la sincronizarea tabelului camere:', error));
 
 module.exports = Camere;

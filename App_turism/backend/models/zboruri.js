@@ -41,7 +41,9 @@ const Zboruri = sequelize.define('Zboruri', {
 
 // Test sincronizare
 Zboruri.sync()
-  .then(() => console.log('Tabelul zboruri a fost sincronizat cu succes.'))
+  .then(
+    // () => console.log('Tabelul zboruri a fost sincronizat cu succes.')
+  )
   .catch((error) => console.error('Eroare la sincronizarea tabelului zboruri:', error));
 
 module.exports = Zboruri;
