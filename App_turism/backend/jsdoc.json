@@ -1,0 +1,12 @@
+{
+    "source": {
+      "include": ["../frontend", "../backend"],  
+   
+      "excludePattern": "(node_modules)|(migrations)" 
+    },
+    "opts": {
+      "destination": "../docs",  
+      "recurse": true  
+    }
+  }
+  

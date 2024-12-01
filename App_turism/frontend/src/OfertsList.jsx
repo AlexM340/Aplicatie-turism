@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import OfertCard from "./OfertCard";
 
+/**
+ * @description Componenta care afiseaza o lista de pachete
+ * @returns {*} Componenta de react 
+ */
 const OfertsList = () => {
   const [travelOferts, setTravelOferts] = useState([]); // State pentru ofertele de călătorie
   const [loading, setLoading] = useState(false); // Începe fără încărcare
@@ -9,7 +13,7 @@ const OfertsList = () => {
   // Funcția care face cererea către server atunci când este apelată
 
   /**
-   * @description
+   * @description Face un request la backend pentru a obtine pachetele si apoi le seteaza intr-un state
    */
   const fetchOferts = () => {
     setLoading(true); // Începe să încarce

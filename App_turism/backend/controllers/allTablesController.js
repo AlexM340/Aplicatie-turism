@@ -6,7 +6,7 @@ const sequelize = require("../database");
 
 // Funcție pentru obținerea camerelor
 /**
- * @description
+ * @description Obtine Camerele din baza de date
  * @param {*} req
  * @param {*} res
  */
@@ -22,7 +22,7 @@ const getCamere = async (req, res) => {
 // Funcție pentru obținerea cazării
 
 /**
- * @description
+ * @description Obtine cazarea din baza de date
  * @param {*} req
  * @param {*} res
  */
@@ -38,7 +38,7 @@ const getCazare = async (req, res) => {
 // Funcție pentru obținerea pachetelor
 
 /**
- * @description
+ * @description Obtine id-ul,pretul si descrierea pachetului
  * @param {*} req
  * @param {*} res
  */
@@ -59,7 +59,7 @@ const getPachete = async (req, res) => {
 
 // Funcție pentru obținerea zborurilor
 /**
- * @description
+ * @description Obtine zborurile din baza de date
  * @param {*} req
  * @param {*} res
  */

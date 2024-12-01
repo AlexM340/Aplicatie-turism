@@ -2,7 +2,6 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../database'); // Importă conexiunea
 const Camere = require('./camere'); // Importă modelul Camere
 const Zboruri = require('./zboruri'); // Importă modelul Zboruri
-console.log("PAchetere")
 const Pachete = sequelize.define('Pachete', {
   id: {
     type: DataTypes.INTEGER,

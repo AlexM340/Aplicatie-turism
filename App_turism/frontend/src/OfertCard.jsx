@@ -1,5 +1,10 @@
 import React from "react";
 
+/**
+ * @description Card care afiseaza o imagine, pretul, locatia si descrierea unui pachet
+ * @param {*} { image, price, location, description }
+ * @returns {*} O componenta react ca returneaza un card
+ */
 const OfertCard = ({ image, price, location, description }) => {
   return (
     <div className="card h-100">
