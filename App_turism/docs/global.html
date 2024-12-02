@@ -104,7 +104,7 @@
     
 
     
-    <h4 class="name" id="OfertCard"><span class="type-signature"></span>OfertCard<span class="signature">({)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    <h4 class="name" id="LoginPage"><span class="type-signature"></span>LoginPage<span class="signature">()</span><span class="type-signature"> &rarr; {JSX.Element}</span></h4>
     
 
     
@@ -112,7 +112,7 @@
 
 
 <div class="description">
-    Card care afiseaza o imagine, pretul, locatia si descrierea unui pachet
+    LoginPage ComponentAceastă componentă reprezintă o pagină de autentificare pentru utilizatori
 </div>
 
 
@@ -136,6 +136,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -148,23 +150,64 @@
 
         <tr>
             
-                <td class="name"><code>{</code></td>
+                <td class="name"><code>props.onLogin</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">function</span>
 
 
             
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">image, price, location, description }</td>
+            <td class="description last">Funcția apelată pentru a efectua autentificarea utilizatorului.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>props.errorMessage</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Mesajul de eroare care trebuie afișat (opțional).</td>
         </tr>
 
     
@@ -205,7 +248,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_src_OfertCard.jsx.html">frontend/src/OfertCard.jsx</a>, <a href="frontend_src_OfertCard.jsx.html#line8">line 8</a>
+        <a href="frontend_src_LoginPage.jsx.html">frontend/src/LoginPage.jsx</a>, <a href="frontend_src_LoginPage.jsx.html#line14">line 14</a>
     </li></ul></dd>
     
 
@@ -234,7 +277,7 @@
 
         
 <div class="param-desc">
-    O componenta react ca returneaza un card
+    Pagina de autentificare redată ca structură JSX.
 </div>
 
 
@@ -245,7 +288,7 @@
     </dt>
     <dd>
         
-<span class="param-type">*</span>
+<span class="param-type">JSX.Element</span>
 
 
     </dd>
@@ -263,7 +306,7 @@
     
 
     
-    <h4 class="name" id="OfertsList"><span class="type-signature"></span>OfertsList<span class="signature">()</span><span class="type-signature"> &rarr; {*}</span></h4>
+    <h4 class="name" id="OfertCard"><span class="type-signature"></span>OfertCard<span class="signature">()</span><span class="type-signature"> &rarr; {JSX.Element}</span></h4>
     
 
     
@@ -271,7 +314,7 @@
 
 
 <div class="description">
-    Componenta care afiseaza o lista de pachete
+    Un card care afișează informațiile despre un pachet turistic, inclusiv o imagine,prețul, locația și o descriere. Conține și un buton pentru rezervare.
 </div>
 
 
@@ -280,6 +323,127 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>props.image</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">URL-ul imaginii asociate cu pachetul</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>props.price</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Prețul pachetului</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>props.location</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Locația pachetului</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>props.description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Descrierea pachetului turistic</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -315,7 +479,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="frontend_src_OfertsList.jsx.html">frontend/src/OfertsList.jsx</a>, <a href="frontend_src_OfertsList.jsx.html#line8">line 8</a>
+        <a href="frontend_src_OfertCard.jsx.html">frontend/src/OfertCard.jsx</a>, <a href="frontend_src_OfertCard.jsx.html#line14">line 14</a>
     </li></ul></dd>
     
 
@@ -344,7 +508,7 @@
 
         
 <div class="param-desc">
-    Componenta de react
+    Un card stilizat cu imagine, informații și un buton.
 </div>
 
 
@@ -355,7 +519,7 @@
     </dt>
     <dd>
         
-<span class="param-type">*</span>
+<span class="param-type">JSX.Element</span>
 
 
     </dd>
@@ -373,7 +537,7 @@
     
 
     
-    <h4 class="name" id="getCamere"><span class="type-signature">(async) </span>getCamere<span class="signature">(req, res)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="OfertsList"><span class="type-signature"></span>OfertsList<span class="signature">()</span><span class="type-signature"> &rarr; {JSX.Element}</span></h4>
     
 
     
@@ -381,7 +545,276 @@
 
 
 <div class="description">
-    Obtine Camerele din baza de date
+    OfertsList ComponentComponenta care afișează o listă de pachete de călătorie
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_src_OfertsList.jsx.html">frontend/src/OfertsList.jsx</a>, <a href="frontend_src_OfertsList.jsx.html#line11">line 11</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Componenta React care conține butonul de încărcare și lista ofertelor.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSX.Element</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="SignUpPage"><span class="type-signature"></span>SignUpPage<span class="signature">()</span><span class="type-signature"> &rarr; {JSX.Element}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Componenta pentru crearea unui cont nou. Afișează un formular pentru a colecta numele,emailul și parola utilizatorului. Oferă feedback utilizatorului dacă există erori.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>props.onSignUp</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Funcția care se ocupă de înregistrarea utilizatorului</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="frontend_src_SignUpPage.jsx.html">frontend/src/SignUpPage.jsx</a>, <a href="frontend_src_SignUpPage.jsx.html#line13">line 13</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Un formular de înregistrare pentru utilizatori.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSX.Element</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getCamere"><span class="type-signature">(async) </span>getCamere<span class="signature">(req, res)</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Obtine Camerele din baza de date.Această funcție folosește modelul `Camere` pentru a extrage toateînregistrările din baza de date și le returnează într-un răspuns JSON.
 </div>
 
 
@@ -423,7 +856,7 @@
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 
             
@@ -433,7 +866,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Obiectul de cerere HTTP.</td>
         </tr>
 
     
@@ -446,7 +879,7 @@
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 
             
@@ -456,7 +889,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Obiectul de răspuns HTTP.</td>
         </tr>
 
     
@@ -497,7 +930,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="backend_controllers_allTablesController.js.html">backend/controllers/allTablesController.js</a>, <a href="backend_controllers_allTablesController.js.html#line13">line 13</a>
+        <a href="backend_controllers_allTablesController.js.html">backend/controllers/allTablesController.js</a>, <a href="backend_controllers_allTablesController.js.html#line18">line 18</a>
     </li></ul></dd>
     
 
@@ -522,6 +955,28 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Returnează un răspuns JSON cu lista camerelor sau un mesaj de eroare.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -533,7 +988,7 @@
     
 
     
-    <h4 class="name" id="getCazare"><span class="type-signature">(async) </span>getCazare<span class="signature">(req, res)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getCazare"><span class="type-signature">(async) </span>getCazare<span class="signature">(req, res)</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
@@ -541,7 +996,7 @@
 
 
 <div class="description">
-    Obtine cazarea din baza de date
+    Obține lista cazărilor din baza de date.Această funcție utilizează modelul `Cazare` pentru a extrage toate înregistrăriledin tabelul asociat și returnează datele sub formă de răspuns JSON
 </div>
 
 
@@ -583,7 +1038,7 @@
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 
             
@@ -593,7 +1048,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Obiectul cererii HTTP</td>
         </tr>
 
     
@@ -606,7 +1061,7 @@
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 
             
@@ -616,7 +1071,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Obiectul răspunsului HTTP</td>
         </tr>
 
     
@@ -657,7 +1112,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="backend_controllers_allTablesController.js.html">backend/controllers/allTablesController.js</a>, <a href="backend_controllers_allTablesController.js.html#line29">line 29</a>
+        <a href="backend_controllers_allTablesController.js.html">backend/controllers/allTablesController.js</a>, <a href="backend_controllers_allTablesController.js.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -682,6 +1137,28 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Răspunsul conține fie lista cazărilor, fie un mesaj de eroare
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -693,7 +1170,7 @@
     
 
     
-    <h4 class="name" id="getPachete"><span class="type-signature">(async) </span>getPachete<span class="signature">(req, res)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getPachete"><span class="type-signature">(async) </span>getPachete<span class="signature">(req, res)</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
@@ -701,7 +1178,7 @@
 
 
 <div class="description">
-    Obtine id-ul,pretul si descrierea pachetului
+    Obține ID-ul, prețul și descrierea fiecărui pachetAceastă funcție execută o interogare SQL pentru a extrage date despre pachetedin tabelele pachete, camere și zboruri, facand join intre tabele
 </div>
 
 
@@ -743,7 +1220,7 @@
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 
             
@@ -753,7 +1230,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Obiectul cererii HTTP</td>
         </tr>
 
     
@@ -766,7 +1243,7 @@
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 
             
@@ -776,7 +1253,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Obiectul răspunsului HTTP</td>
         </tr>
 
     
@@ -817,7 +1294,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="backend_controllers_allTablesController.js.html">backend/controllers/allTablesController.js</a>, <a href="backend_controllers_allTablesController.js.html#line45">line 45</a>
+        <a href="backend_controllers_allTablesController.js.html">backend/controllers/allTablesController.js</a>, <a href="backend_controllers_allTablesController.js.html#line58">line 58</a>
     </li></ul></dd>
     
 
@@ -842,6 +1319,28 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Răspunsul conține fie lista de pachete, fie un mesaj de eroare
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -853,7 +1352,7 @@
     
 
     
-    <h4 class="name" id="getZboruri"><span class="type-signature">(async) </span>getZboruri<span class="signature">(req, res)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getZboruri"><span class="type-signature">(async) </span>getZboruri<span class="signature">(req, res)</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
@@ -861,7 +1360,7 @@
 
 
 <div class="description">
-    Obtine zborurile din baza de date
+    Obține lista zborurilor din baza de dateAceastă funcție utilizează modelul Zboruri pentru a extrage toate înregistrăriledin tabelul asociat și returnează datele sub formă de răspuns JSON.
 </div>
 
 
@@ -903,7 +1402,7 @@
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 
             
@@ -913,7 +1412,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Obiectul cererii HTTP</td>
         </tr>
 
     
@@ -926,7 +1425,7 @@
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 
             
@@ -936,7 +1435,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Obiectul răspunsului HTTP</td>
         </tr>
 
     
@@ -977,7 +1476,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="backend_controllers_allTablesController.js.html">backend/controllers/allTablesController.js</a>, <a href="backend_controllers_allTablesController.js.html#line66">line 66</a>
+        <a href="backend_controllers_allTablesController.js.html">backend/controllers/allTablesController.js</a>, <a href="backend_controllers_allTablesController.js.html#line84">line 84</a>
     </li></ul></dd>
     
 
@@ -1002,6 +1501,28 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Răspunsul conține fie lista de zboruri, fie un mesaj de eroare
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1023,13 +1544,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#OfertCard">OfertCard</a></li><li><a href="global.html#OfertsList">OfertsList</a></li><li><a href="global.html#getCamere">getCamere</a></li><li><a href="global.html#getCazare">getCazare</a></li><li><a href="global.html#getPachete">getPachete</a></li><li><a href="global.html#getZboruri">getZboruri</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#OfertCard">OfertCard</a></li><li><a href="global.html#OfertsList">OfertsList</a></li><li><a href="global.html#SignUpPage">SignUpPage</a></li><li><a href="global.html#getCamere">getCamere</a></li><li><a href="global.html#getCazare">getCazare</a></li><li><a href="global.html#getPachete">getPachete</a></li><li><a href="global.html#getZboruri">getZboruri</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Dec 02 2024 00:16:54 GMT+0200 (Eastern European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Dec 02 2024 10:01:29 GMT+0200 (Eastern European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
