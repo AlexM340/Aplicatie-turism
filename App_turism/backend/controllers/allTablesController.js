@@ -6,9 +6,14 @@ const sequelize = require("../database");
 
 // Funcție pentru obținerea camerelor
 /**
- * @description Obtine Camerele din baza de date
- * @param {*} req
- * @param {*} res
+ * Obtine Camerele din baza de date.
+ *
+ * Această funcție folosește modelul `Camere` pentru a extrage toate
+ * înregistrările din baza de date și le returnează într-un răspuns JSON.
+ * 
+ * @param {Object} req - Obiectul de cerere HTTP.
+ * @param {Object} res - Obiectul de răspuns HTTP.
+ * @returns {void} Returnează un răspuns JSON cu lista camerelor sau un mesaj de eroare.
  */
 const getCamere = async (req, res) => {
   try {
@@ -19,13 +24,17 @@ const getCamere = async (req, res) => {
   }
 };
 
-// Funcție pentru obținerea cazării
-
 /**
- * @description Obtine cazarea din baza de date
- * @param {*} req
- * @param {*} res
+ * Obține lista cazărilor din baza de date.
+ *
+ * Această funcție utilizează modelul `Cazare` pentru a extrage toate înregistrările
+ * din tabelul asociat și returnează datele sub formă de răspuns JSON
+ * 
+ * @param {Object} req - Obiectul cererii HTTP
+ * @param {Object} res - Obiectul răspunsului HTTP
+ * @returns {void} Răspunsul conține fie lista cazărilor, fie un mesaj de eroare
  */
+
 const getCazare = async (req, res) => {
   try {
     const cazare = await Cazare.findAll(); // Obține toate cazările din baza de date
@@ -35,13 +44,17 @@ const getCazare = async (req, res) => {
   }
 };
 
-// Funcție pentru obținerea pachetelor
-
 /**
- * @description Obtine id-ul,pretul si descrierea pachetului
- * @param {*} req
- * @param {*} res
+ * Obține ID-ul, prețul și descrierea fiecărui pachet
+ *
+ * Această funcție execută o interogare SQL pentru a extrage date despre pachete
+ * din tabelele pachete, camere și zboruri, facand join intre tabele
+ * 
+ * @param {Object} req - Obiectul cererii HTTP
+ * @param {Object} res - Obiectul răspunsului HTTP
+ * @returns {void} Răspunsul conține fie lista de pachete, fie un mesaj de eroare
  */
+
 const getPachete = async (req, res) => {
   try {
     //   const pachete = await Pachete.findAll();
@@ -57,12 +70,17 @@ const getPachete = async (req, res) => {
   }
 };
 
-// Funcție pentru obținerea zborurilor
 /**
- * @description Obtine zborurile din baza de date
- * @param {*} req
- * @param {*} res
+ * Obține lista zborurilor din baza de date
+ *
+ * Această funcție utilizează modelul Zboruri pentru a extrage toate înregistrările
+ * din tabelul asociat și returnează datele sub formă de răspuns JSON.
+ * 
+ * @param {Object} req - Obiectul cererii HTTP
+ * @param {Object} res - Obiectul răspunsului HTTP
+ * @returns {void} Răspunsul conține fie lista de zboruri, fie un mesaj de eroare
  */
+
 const getZboruri = async (req, res) => {
   try {
     const zboruri = await Zboruri.findAll(); // Obține toate zborurile din baza de date

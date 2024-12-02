@@ -1,6 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+/**
+ * SignUpPage Component
+ *
+ * @description Componenta pentru crearea unui cont nou. Afișează un formular pentru a colecta numele,
+ * emailul și parola utilizatorului. Oferă feedback utilizatorului dacă există erori.
+ *
+ * @param {function} props.onSignUp - Funcția care se ocupă de înregistrarea utilizatorului
+ *
+ * @returns {JSX.Element} Un formular de înregistrare pentru utilizatori.
+ */
 const SignUpPage = ({ onSignUp }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

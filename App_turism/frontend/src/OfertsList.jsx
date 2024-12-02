@@ -2,18 +2,26 @@ import React, { useState } from "react";
 import OfertCard from "./OfertCard";
 
 /**
- * @description Componenta care afiseaza o lista de pachete
- * @returns {*} Componenta de react 
+ * OfertsList Component
+ *
+ * Componenta care afișează o listă de pachete de călătorie
+ *
+ * @returns {JSX.Element} Componenta React care conține butonul de încărcare și lista ofertelor.
  */
 const OfertsList = () => {
   const [travelOferts, setTravelOferts] = useState([]); // State pentru ofertele de călătorie
   const [loading, setLoading] = useState(false); // Începe fără încărcare
   const [error, setError] = useState(null); // Capturăm erorile
 // console.log(travelOferts[0][0].pret)
-  // Funcția care face cererea către server atunci când este apelată
 
   /**
-   * @description Face un request la backend pentru a obtine pachetele si apoi le seteaza intr-un state
+   * fetchOferts
+   *
+   * Face o cerere la server pentru a obține lista de pachete turistice și 
+   * actualizează stările componentei în funcție de răspuns.
+   *
+   * @description Obține datele ofertelor de la endpoint-ul "/api/pachete".
+   * Setează ofertele în `travelOferts`, oprește încărcarea și tratează eventualele erori.
    */
   const fetchOferts = () => {
     setLoading(true); // Începe să încarce

@@ -1,9 +1,15 @@
-import React from "react";
-
 /**
- * @description Card care afiseaza o imagine, pretul, locatia si descrierea unui pachet
- * @param {*} { image, price, location, description }
- * @returns {*} O componenta react ca returneaza un card
+ * OfertCard Component
+ *
+ * @description Un card care afișează informațiile despre un pachet turistic, inclusiv o imagine,
+ * prețul, locația și o descriere. Conține și un buton pentru rezervare.
+ *
+ * @param {string} props.image - URL-ul imaginii asociate cu pachetul
+ * @param {number|string} props.price - Prețul pachetului
+ * @param {string} props.location - Locația pachetului
+ * @param {string} props.description - Descrierea pachetului turistic
+ *
+ * @returns {JSX.Element} Un card stilizat cu imagine, informații și un buton.
  */
 const OfertCard = ({ image, price, location, description }) => {
   return (

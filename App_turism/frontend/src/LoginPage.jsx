@@ -1,7 +1,16 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+/**
+ * LoginPage Component
+ *
+ * Această componentă reprezintă o pagină de autentificare pentru utilizatori
+ *
+ * @param {Function} props.onLogin - Funcția apelată pentru a efectua autentificarea utilizatorului.
+ * @param {string} [props.errorMessage] - Mesajul de eroare care trebuie afișat (opțional).
+ * @returns {JSX.Element} Pagina de autentificare redată ca structură JSX.
+ */
 const LoginPage = ({ onLogin, errorMessage }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
