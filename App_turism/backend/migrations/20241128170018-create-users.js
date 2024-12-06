@@ -4,14 +4,14 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     // Creare tabele
-    await queryInterface.createTable('zboruri', {
+    await queryInterface.createTable('camere', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      aeroport_plecare: {
-        type: Sequelize.STRING(255),
+      id_cazare: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       aeroport_sosire: {
@@ -117,7 +117,6 @@ module.exports = {
           model: 'zboruri',
           key: 'id',
         },
-        onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
       data_sosire: {
@@ -154,17 +153,10 @@ module.exports = {
       pret: 150,
     }]);
 
-    await queryInterface.bulkInsert('pachete', [{
-      id_camera: 1, 
-      id_zbor: 1,   
-      data_sosire: '2024-06-16',
-      data_plecare: '2024-06-20',
-    }]);
   },
 
   async down(queryInterface, Sequelize) {
     // Ștergerea tabelelor în ordinea inversă față de crearea lor
-    await queryInterface.dropTable('pachete');
     await queryInterface.dropTable('camere');
     await queryInterface.dropTable('cazare');
     await queryInterface.dropTable('zboruri');

@@ -15,7 +15,6 @@ const Camere = sequelize.define('Camere', {
       model: Cazare, // Numele modelului la care se face referința
       key: 'id',
     },
-    onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   },
   nr_persoane: {
