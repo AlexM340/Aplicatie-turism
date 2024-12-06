@@ -4,29 +4,30 @@ const Cazare = require('./cazare'); // Importă modelul Cazare
 
 const Camere = sequelize.define('Camere', {
   id: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  id_hotel: {
-    type: DataTypes.INTEGER,
+  id_cazare: {
+    type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: Cazare, // Numele modelului la care se face referința
+      model: 'cazare',// Numele modelului la care se face referința
       key: 'id',
     },
+    onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   },
   nr_persoane: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
   descriere: {
-    type: DataTypes.TEXT,
-    allowNull: true,
+    type: Sequelize.STRING(600),
+    allowNull: false,
   },
   pret: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     allowNull: false,
   }
 }, {

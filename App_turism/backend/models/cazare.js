@@ -1,30 +1,47 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../database'); 
-console.log("cazare");
-const Cazare = sequelize.define('Cazare', {
+const Tari = require('./tari'); // Importă modelul tari
+const Localitati = require('./localitati'); // Importă modelul localitati
+
+
+const Cazare = sequelize.define('cazare', {
   id: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
   nume: {
-    type: DataTypes.STRING(255),
+    type: Sequelize.STRING(200),
     allowNull: false,
   },
   telefon: {
-    type: DataTypes.STRING(20),
-    allowNull: true,
+    type: Sequelize.STRING(15),
+    allowNull: false,
   },
   descriere: {
-    type: DataTypes.TEXT,
-    allowNull: true,
+    type: Sequelize.STRING(600),
+    allowNull: false,
   },
-  adresa: {
-    type: DataTypes.STRING(255),
-    allowNull: true,
+  id_tara: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'tari',// Numele modelului la care se face referința
+      key: 'id',
+    },
+    onDelete: 'CASCADE',
+  },
+  id_loc: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'localitati',// Numele modelului la care se face referința
+      key: 'id',
+    },
+    onDelete: 'CASCADE',
   }
 }, {
-  tableName: 'Cazare',  // Specifică numele corect al tabelei
+  tableName: 'cazare',  // Specifică numele corect al tabelei
 });
 
 // Test sincronizare

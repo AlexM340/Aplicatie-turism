@@ -1,42 +1,80 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../database'); 
+const Tari = require('./tari'); // Importă modelul tari
+const Localitati = require('./localitati'); // Importă modelul localitati
 
-const Zboruri = sequelize.define('Zboruri', {
+const Zboruri = sequelize.define('zboruri', {
   id: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
   aeroport_plecare: {
-    type: DataTypes.STRING(255),
+    type: Sequelize.STRING(200),
     allowNull: false,
   },
   aeroport_sosire: {
-    type: DataTypes.STRING(255),
+    type: Sequelize.STRING(200),
     allowNull: false,
   },
+  id_loc_plecare: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'localitati',
+      key: 'id',
+    },
+    onDelete: 'CASCADE',
+  },
+  id_tara_plecare: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'tari',
+      key: 'id',
+    },
+    onDelete: 'CASCADE',
+  },
+  id_loc_sosire: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'localitati',
+      key: 'id',
+    },
+    onDelete: 'CASCADE',
+  },
+  id_tara_sosire: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'tari',
+      key: 'id',
+    },
+    onDelete: 'CASCADE',
+  },
   data_plecare: {
-    type: DataTypes.DATE,
+    type: Sequelize.DATE,
     allowNull: false,
   },
   data_sosire: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  pret: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.DATE,
     allowNull: false,
   },
   companie: {
-    type: DataTypes.STRING(255),
+    type: Sequelize.STRING(200),
+    allowNull: false,
+  },
+  pret: {
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
   clasa: {
-    type: DataTypes.STRING(50),
+    type: Sequelize.STRING(200),
     allowNull: false,
   }
 }, {
-  tableName: 'Zboruri',  // Asigură-te că numele tabelei este corect
+  tableName: 'zboruri',  // Asigură-te că numele tabelei este corect
 });
 
 // Test sincronizare

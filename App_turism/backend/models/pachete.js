@@ -1,39 +1,40 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../database'); // Importă conexiunea
-const Camere = require('./camere'); // Importă modelul Camere
-const Zboruri = require('./zboruri'); // Importă modelul Zboruri
-const Pachete = sequelize.define('Pachete', {
+const Camere = require('./camere'); // Importă modelul camere
+const Zboruri = require('./zboruri'); // Importă modelul zboruri
+
+const Pachete = sequelize.define('pachete', {
   id: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
   id_camera: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: Camere,
+      model: 'camere', // Numele modelului la care se face referința
       key: 'id',
     },
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   },
   id_zbor: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: Zboruri,
+      model: 'zboruri', // Numele modelului la care se face referința
       key: 'id',
     },
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   },
-  data_sosire: {
-    type: DataTypes.DATE,
+  data_plecare: {
+    type: Sequelize.DATE,
     allowNull: false,
   },
-  data_plecare: {
-    type: DataTypes.DATE,
+  data_sosire: {
+    type: Sequelize.DATE,
     allowNull: false,
   }
 }, {

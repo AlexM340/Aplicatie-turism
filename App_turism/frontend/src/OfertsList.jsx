@@ -56,9 +56,9 @@ const OfertsList = () => {
           <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={index}>
             <OfertCard
               // image={ofert.image} // Presupunem că ai un câmp `image` în datele din backend
-              price={ofert[0].pret} // Presupunem că ai un câmp `price` în datele din backend
+              price={ofert.pret} // Presupunem că ai un câmp `price` în datele din backend
               // location={ofert.location} // Presupunem că ai un câmp `location` în datele din backend
-              description={ofert[0].descriere} // Presupunem că ai un câmp `description` în datele din backend
+              description={ofert.descriere} // Presupunem că ai un câmp `description` în datele din backend
             />
           </div>
         ))}
