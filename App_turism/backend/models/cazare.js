@@ -43,6 +43,23 @@ const Cazare = sequelize.define('cazare', {
 }, {
   tableName: 'cazare',  // Specifică numele corect al tabelei
 });
+Cazare.associate = (models) => {
+  Cazare.belongsTo(models.Tari, { 
+    foreignKey: "id_tara", 
+    as: "tara" 
+  });
+
+  Cazare.belongsTo(models.Localitati, { 
+    foreignKey: "id_loc", 
+    as: "localitate" 
+  });
+
+  Cazare.hasMany(models.Camere, { 
+    foreignKey: "id_cazare", 
+    as: "camere" 
+  });
+};
+
 
 // Test sincronizare
 Cazare.sync()

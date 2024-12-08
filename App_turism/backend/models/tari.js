@@ -15,6 +15,16 @@ const Tari = sequelize.define('tari', {
 }, {
   tableName: 'tari',  // Specifică numele corect al tabelei
 });
+Tari.associate = (models) => {
+  Tari.hasMany(models.Localitati, {
+    foreignKey: 'id_tara',
+    as: 'localitati',
+  });
+  Tari.hasMany(models.Cazare, { 
+    foreignKey: "id_tara", 
+    as: "cazari" 
+  });
+};
 
 // Test sincronizare
 Tari.sync()

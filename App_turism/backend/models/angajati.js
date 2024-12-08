@@ -39,6 +39,13 @@ const Angajati = sequelize.define(
     tableName: "angajati", // Specifică numele corect al tabelei
   }
 );
+Angajati.associate = (models) => {
+  Angajati.hasMany(models.Drepturi_utilizatori, {
+    foreignKey: "id_angajat",
+    as: "drepturi",
+  });
+  Angajati.hasMany(Pachete, { foreignKey: 'id_angajat', as: 'pachete' });
+};
 
 // Testam sincronizarea
 Angajati.sync()

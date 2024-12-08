@@ -36,6 +36,18 @@ const Drepturi_utilizatori = sequelize.define(
   }
 );
 
+
+Drepturi_utilizatori.associate = (models) => {
+  Drepturi_utilizatori.belongsTo(models.Angajati, {
+    foreignKey: "id_angajat",
+    as: "angajat",
+  });
+
+  Drepturi_utilizatori.belongsTo(models.Permisiuni, {
+    foreignKey: "id_permisiune",
+    as: "permisiune",
+  });
+};
 // Test sincronizare
 Drepturi_utilizatori.sync()
   .then

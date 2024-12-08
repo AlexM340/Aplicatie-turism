@@ -33,6 +33,13 @@ const Clienti = sequelize.define('clienti', {
   tableName: 'clienti',  // Specifică numele corect al tabelei
 });
 
+Clienti.associate = (models)=>{
+  Clienti.hasOne(models.Client_detalii,{foreignKey:'id_client', as:"clienti_detalii"})
+  Clienti.hasMany(models.Rezervari, { 
+    foreignKey: "id_client", 
+    as: "rezervari" 
+  });
+}
 // Test sincronizare
 Clienti.sync()
   .then(

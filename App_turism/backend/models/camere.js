@@ -37,6 +37,13 @@ const Camere = sequelize.define(
     tableName: "Camere", // Specifică numele corect al tabelei
   }
 );
+Camere.associate = (models) => {
+  Camere.belongsTo(models.Cazare, { foreignKey: "id_cazare", as: "cazare" });
+  Camere.hasMany(models.Pachete, {
+    foreignKey: "id_camera",
+    as: "pachete",
+  });
+};
 
 // Testam sincronizarea
 Camere.sync()

@@ -33,6 +33,9 @@ const Clienti_detalii = sequelize.define('clienti_detalii', {
 }, {
   tableName: 'clienti_detalii',  // Specifică numele corect al tabelei
 });
+Clienti_detalii.associate = (models) =>{
+  Clienti_detalii.belongsTo(models.Clienti,{foreignKey:'id_client', as:"client"})
+}
 
 // Test sincronizare
 Clienti_detalii.sync()

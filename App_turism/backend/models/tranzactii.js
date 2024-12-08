@@ -33,6 +33,12 @@ const Tranzactii = sequelize.define('tranzactii', {
 }, {
   tableName: 'tranzactii',  // Specifică numele corect al tabelei
 });
+Tranzactii.associate = (models) => {
+  Tranzactii.belongsTo(models.Rezervari, { 
+    foreignKey: "id_rezervare", 
+    as: "rezervare"  
+  });
+};
 
 // Test sincronizare
 Tranzactii.sync()

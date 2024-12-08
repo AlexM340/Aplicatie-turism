@@ -31,6 +31,21 @@ const Rezervari = sequelize.define('rezervari', {
 }, {
   tableName: 'rezervari',  // Specifică numele corect al tabelei
 });
+Rezervari.associate = (models) => {
+  Rezervari.belongsTo(models.Pachete, { 
+    foreignKey: "id_pachet", 
+    as: "pachet" 
+  });
+
+  Rezervari.belongsTo(models.Clienti, { 
+    foreignKey: "id_client", 
+    as: "client" 
+  });
+  Rezervari.hasMany(models.Tranzactii, { 
+    foreignKey: "id_rezervare", 
+    as: "tranzactii"  // Numele aliasului pentru această asociere
+  });
+};
 
 // Test sincronizare
 Rezervari.sync()

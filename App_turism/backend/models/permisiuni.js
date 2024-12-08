@@ -20,6 +20,12 @@ const Permisiuni = sequelize.define('permisiuni', {
 }, {
   tableName: 'permisiuni',  // Specifică numele corect al tabelei
 });
+Permisiuni.associate = (models) => {
+  Permisiuni.hasMany(models.Drepturi_utilizatori, {
+    foreignKey: "id_permisiune",
+    as: "drepturi",
+  });
+};
 
 // Test sincronizare
 Permisiuni.sync()
