@@ -12,8 +12,6 @@ const sequelize = new Sequelize(
         port: process.env.DB_PORT || 3306,
     }
 );
-// console.log(process.env.DB_HOST)
-// Testează conexiunea
 sequelize.authenticate()
   .then(() => console.log('Conexiunea la baza de date a fost realizată cu succes.'))
   .catch(err => console.error('Nu s-a putut conecta la baza de date:', err));

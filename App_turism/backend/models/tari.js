@@ -19,7 +19,7 @@ const Tari = sequelize.define('tari', {
 // Test sincronizare
 Tari.sync()
   .then(
-    // () => console.log('Tabelul tari a fost sincronizat cu succes.')
+    () => console.log('Tabelul tari a fost sincronizat cu succes.')
   )
   .catch((error) => console.error('Eroare la sincronizarea tabelului tari:', error));
 
