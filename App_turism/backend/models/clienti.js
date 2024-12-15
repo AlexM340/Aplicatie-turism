@@ -30,13 +30,14 @@ const Clienti = sequelize.define('clienti', {
         allowNull: true,
       }
 }, {
+  timestamps: false, // Disable `createdAt` and `updatedAt`
   tableName: 'clienti',  // Specifică numele corect al tabelei
 });
 
 // Test sincronizare
 Clienti.sync()
   .then(
-    // () => console.log('Tabelul cazare a fost sincronizat cu succes.')
+    () => console.log('Tabelul clineti a fost sincronizat cu succes.')
   )
   .catch((error) => console.error('Eroare la sincronizarea tabelului cazare:', error));
 

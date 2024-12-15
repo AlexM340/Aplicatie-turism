@@ -1,35 +1,28 @@
 const express = require('express');
-const allTablesController = require('./routes/allTablesRoutes');  // Ensure this path is correct
-const cors = require('cors');  // Import CORS
-const sequelize = require('./database');  // Ensure sequelize connection is established
+const cors = require('cors'); 
+const sequelize = require('./database');
 const path = require('path');
-const { getPachete } = require('./controllers/allTablesController');
-require('dotenv').config({ path: path.resolve(__dirname, 'dataBaseSettings.env') });  // Load environment variables
+const authRoutes = require('./routes/authRoutes'); 
+const { getPachete } = require('./controllers/allTablesController'); 
+require('dotenv').config({ path: path.resolve(__dirname, 'dataBaseSettings.env') }); 
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware to parse JSON
-app.use(express.json());
-app.use(cors());
-const router = express.Router();
-app.use('/',router);
-router.get('/api/pachete', getPachete);
-// console.log("Request")
+// Middleware-uri
+app.use(express.json()); // Parsează cererile JSON
+app.use(cors()); // Activează CORS
 
-// Enable CORS with specific origin
+// Rute
+app.get('/api/pachete', getPachete);
+app.use('/api/auth', authRoutes);
 
-// Define routes
-// app.use('/api', allTablesController);  // Make sure allTablesController is correctly configured in routes
 
-// Start the server
 app.listen(PORT, async () => {
   try {
-    // Test the Sequelize connection
     await sequelize.authenticate();
-    // console.log('Sequelize connected successfully');
-    
-    // console.log(`Express server running on http://localhost:${PORT}`);
+    console.log('Database connected successfully');
+    console.log(`Server running on http://localhost:${PORT}`);
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }

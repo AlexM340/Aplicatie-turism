@@ -1,30 +1,47 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-/**
- * SignUpPage Component
- *
- * @description Componenta pentru crearea unui cont nou. Afișează un formular pentru a colecta numele,
- * emailul și parola utilizatorului. Oferă feedback utilizatorului dacă există erori.
- *
- * @param {function} props.onSignUp - Funcția care se ocupă de înregistrarea utilizatorului
- *
- * @returns {JSX.Element} Un formular de înregistrare pentru utilizatori.
- */
-const SignUpPage = ({ onSignUp }) => {
+
+const SignUpPage = () => {
+  const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [parola, setParola] = useState('');  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
 
-    if (name && email && password) {
-      onSignUp({ name, email, password });
-      setErrorMessage("");
-      alert("Sign up successful!");
-      navigate("/");
+    if (username && name && email && parola) {
+      try {
+        const response = await fetch("http://localhost:5000/api/auth/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            name,
+            email,
+            parola,
+          }),
+        });
+
+        if (!response.ok) {
+          // Gestionare erori de la server
+          const errorData = await response.json();
+          setErrorMessage(errorData.message || "Sign up failed");
+          return;
+        }
+
+        // Dacă înregistrarea are succes
+        const data = await response.json();
+        alert("Sign up successful!");
+        navigate("/"); // Redirecționează utilizatorul
+      } catch (error) {
+        // Gestionare erori de rețea sau de cod
+        setErrorMessage("An error occurred. Please try again.");
+        console.error("Error during signup:", error);
+      }
     } else {
       setErrorMessage("Please fill in all fields.");
     }
@@ -35,10 +52,20 @@ const SignUpPage = ({ onSignUp }) => {
       <h2>Create a New Account</h2>
       {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
       <form onSubmit={handleSignUp} className="mt-4">
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Name
+        <div className="form-floating mb-3">
+          <input
+            type="text"
+            id="username"
+            className="form-control"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+          <label htmlFor="username" className="form-label">
+            Username
           </label>
+        </div>
+        <div className="form-floating mb-3">
           <input
             type="text"
             id="name"
@@ -47,11 +74,11 @@ const SignUpPage = ({ onSignUp }) => {
             onChange={(e) => setName(e.target.value)}
             required
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
+          <label htmlFor="name" className="form-label">
+            Name
           </label>
+        </div>
+        <div className="form-floating mb-3">
           <input
             type="email"
             id="email"
@@ -60,19 +87,22 @@ const SignUpPage = ({ onSignUp }) => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
+          <label htmlFor="email" className="form-label">
+            Email
           </label>
+        </div>
+        <div className="form-floating mb-3">
           <input
             type="password"
             id="password"
             className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={parola}
+            onChange={(e) => setParola(e.target.value)}
             required
           />
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
         </div>
         <button type="submit" className="btn btn-primary">
           Sign Up

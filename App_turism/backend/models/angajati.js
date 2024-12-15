@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../database'); // Importă conexiunea
+const sequelize = require('../database');
 
 const Angajati = sequelize.define('angajati', {
     id: {
