@@ -1,10 +1,10 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = require("../database");
+const {sequelize} = require("../database");
 const Tari = require("./tari"); // Importă modelul tari
 const Localitati = require("./localitati"); // Importă modelul localitati
 
 const Zboruri = sequelize.define(
-  "zboruri",
+  "Zboruri",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -23,7 +23,7 @@ const Zboruri = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: "localitati",
+        model: Localitati,
         key: "id",
       },
       onDelete: "CASCADE",
@@ -32,7 +32,7 @@ const Zboruri = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: "tari",
+        model: Tari,
         key: "id",
       },
       onDelete: "CASCADE",
@@ -41,7 +41,7 @@ const Zboruri = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: "localitati",
+        model: Localitati,
         key: "id",
       },
       onDelete: "CASCADE",
@@ -50,7 +50,7 @@ const Zboruri = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: "tari",
+        model: Tari,
         key: "id",
       },
       onDelete: "CASCADE",
@@ -103,14 +103,5 @@ Zboruri.associate = (models) => {
     as: "pachete" 
   });
 };
-
-// Test sincronizare
-Zboruri.sync()
-  .then
-  // () => console.log('Tabelul zboruri a fost sincronizat cu succes.')
-  ()
-  .catch((error) =>
-    console.error("Eroare la sincronizarea tabelului zboruri:", error)
-  );
 
 module.exports = Zboruri;

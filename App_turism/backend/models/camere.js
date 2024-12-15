@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = require("../database"); // Importă conexiunea
-const Cazare = require("./cazare"); // Importă modelul Cazare
+const {sequelize} = require("../database"); // Importă conexiunea
+const Cazare = require("./cazare");
 
 const Camere = sequelize.define(
   "Camere",
@@ -14,7 +14,7 @@ const Camere = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: "cazare", // Numele modelului la care se face referința
+        model: Cazare, // Numele modelului la care se face referința
         key: "id",
       },
       onUpdate: "CASCADE",
@@ -44,14 +44,5 @@ Camere.associate = (models) => {
     as: "pachete",
   });
 };
-
-// Testam sincronizarea
-Camere.sync()
-  .then
-  // () => console.log('Tabelul camere a fost sincronizat cu succes.')
-  ()
-  .catch((error) =>
-    console.error("Eroare la sincronizarea tabelului camere:", error)
-  );
 
 module.exports = Camere;

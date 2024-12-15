@@ -1,9 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../database'); 
-const Clienti = require('./clienti'); // Importă modelul clienti
-const Localitati = require('./localitati'); // Importă modelul localitati
+const {sequelize} = require('../database'); 
+const Clienti = require('./clienti');
 
-const Clienti_detalii = sequelize.define('clienti_detalii', {
+const Clienti_detalii = sequelize.define('Clienti_detalii', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -13,7 +12,7 @@ const Clienti_detalii = sequelize.define('clienti_detalii', {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'clienti', // Numele modelului la care se face referința
+          model: Clienti, 
           key: 'id',
         },
         onDelete: 'CASCADE',
@@ -36,12 +35,5 @@ const Clienti_detalii = sequelize.define('clienti_detalii', {
 Clienti_detalii.associate = (models) =>{
   Clienti_detalii.belongsTo(models.Clienti,{foreignKey:'id_client', as:"client"})
 }
-
-// Test sincronizare
-Clienti_detalii.sync()
-  .then(
-    // () => console.log('Tabelul clienti_detalii a fost sincronizat cu succes.')
-  )
-  .catch((error) => console.error('Eroare la sincronizarea tabelului clienti_detalii:', error));
 
 module.exports = Clienti_detalii;

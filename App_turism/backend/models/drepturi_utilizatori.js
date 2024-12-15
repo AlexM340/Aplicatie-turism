@@ -1,10 +1,10 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = require("../database");
+const {sequelize} = require("../database");
 const Angajati = require("./angajati"); // Importă modelul angajati
 const Permisiuni = require("./permisiuni"); // Importă modelul permisiuni
 
 const Drepturi_utilizatori = sequelize.define(
-  "drepturi_utilizatori",
+  "Drepturi_utilizatori",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -15,7 +15,7 @@ const Drepturi_utilizatori = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: "angajati", // Numele modelului la care se face referința
+        model: Angajati, // Numele modelului la care se face referința
         key: "id",
       },
       onUpdate: "CASCADE",
@@ -25,7 +25,7 @@ const Drepturi_utilizatori = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: "permisiuni", // Numele modelului la care se face referința
+        model: Permisiuni, // Numele modelului la care se face referința
         key: "id",
       },
       onDelete: "CASCADE",
@@ -48,16 +48,5 @@ Drepturi_utilizatori.associate = (models) => {
     as: "permisiune",
   });
 };
-// Test sincronizare
-Drepturi_utilizatori.sync()
-  .then
-  // () => console.log('Tabelul drepturi_utilizatori a fost sincronizat cu succes.')
-  ()
-  .catch((error) =>
-    console.error(
-      "Eroare la sincronizarea tabelului drepturi_utilizatori:",
-      error
-    )
-  );
 
 module.exports = Drepturi_utilizatori;

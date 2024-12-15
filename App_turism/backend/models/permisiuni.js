@@ -1,9 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../database'); 
+const {sequelize} = require('../database'); 
 
-
-
-const Permisiuni = sequelize.define('permisiuni', {
+const Permisiuni = sequelize.define('Permisiuni', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -26,12 +24,5 @@ Permisiuni.associate = (models) => {
     as: "drepturi",
   });
 };
-
-// Test sincronizare
-Permisiuni.sync()
-  .then(
-    // () => console.log('Tabelul permisiuni a fost sincronizat cu succes.')
-  )
-  .catch((error) => console.error('Eroare la sincronizarea tabelului permisiuni:', error));
 
 module.exports = Permisiuni;

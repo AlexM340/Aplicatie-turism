@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import OfertCard from "./OfertCard";
+import { useQuery } from "@tanstack/react-query";
 
 /**
  * OfertsList Component
@@ -9,15 +10,31 @@ import OfertCard from "./OfertCard";
  * @returns {JSX.Element} Componenta React care conține butonul de încărcare și lista ofertelor.
  */
 const OfertsList = () => {
-  const [travelOferts, setTravelOferts] = useState([]); // State pentru ofertele de călătorie
+  const [travelOferts, setTravelOferts] = useState(undefined); // State pentru ofertele de călătorie
   const [loading, setLoading] = useState(false); // Începe fără încărcare
   const [error, setError] = useState(null); // Capturăm erorile
-// console.log(travelOferts[0][0].pret)
+  // console.log(travelOferts[0][0].pret)
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["OfertsList"],
+    queryFn: () => {
+      return fetch("http://localhost:5000/api/tari").then((response) => {
+        if (!response.ok) {
+          throw new Error("Eroare la obținerea ofertelor");
+        }
+        return response.json();
+      });
+    },
+  });
+  console.log(data)
+  if (data && !travelOferts) {
+    setTravelOferts(data);
+  }
 
   /**
    * fetchOferts
    *
-   * Face o cerere la server pentru a obține lista de pachete turistice și 
+   * Face o cerere la server pentru a obține lista de pachete turistice și
    * actualizează stările componentei în funcție de răspuns.
    *
    * @description Obține datele ofertelor de la endpoint-ul "/api/pachete".
@@ -25,7 +42,7 @@ const OfertsList = () => {
    */
   const fetchOferts = () => {
     setLoading(true); // Începe să încarce
-    fetch("http://localhost:5000/api/pachete")  // Presupunem că datele de oferte sunt în endpointul "/pachete"
+    fetch("http://localhost:5000/api/pachete") // Presupunem că datele de oferte sunt în endpointul "/pachete"
       .then((response) => {
         if (!response.ok) {
           throw new Error("Eroare la obținerea ofertelor");
@@ -42,23 +59,24 @@ const OfertsList = () => {
       });
   };
 
+  if (isLoading) return <div>Loading...</div>;
   return (
     <div className="container mt-4">
       <button onClick={fetchOferts} className="btn btn-primary mb-4">
         Încarcă ofertele
       </button>
-
-      {loading && <p>Loading...</p>} {/* Afișăm mesajul de încărcare când datele sunt obținute */}
-      {error && <p>{error}</p>} {/* Afișăm mesajul de eroare dacă ceva nu merge bine */}
-
+      {loading && <p>Loading...</p>}{" "}
+      {/* Afișăm mesajul de încărcare când datele sunt obținute */}
+      {error && <p>{error}</p>}{" "}
+      {/* Afișăm mesajul de eroare dacă ceva nu merge bine */}
       <div className="row">
-        {travelOferts.map((ofert, index) => (
+        {travelOferts?.map((ofert, index) => (
           <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={index}>
             <OfertCard
               // image={ofert.image} // Presupunem că ai un câmp `image` în datele din backend
               price={ofert.pret} // Presupunem că ai un câmp `price` în datele din backend
               // location={ofert.location} // Presupunem că ai un câmp `location` în datele din backend
-              description={ofert.descriere} // Presupunem că ai un câmp `description` în datele din backend
+              description={'foarte tare'} // Presupunem că ai un câmp `description` în datele din backend
             />
           </div>
         ))}

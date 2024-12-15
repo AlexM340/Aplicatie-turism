@@ -1,10 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../database'); 
-const Tari = require('./tari'); // Importă modelul tari
-const Localitati = require('./localitati'); // Importă modelul localitati
+const {sequelize} = require('../database'); 
 
 
-const Cazare = sequelize.define('cazare', {
+const Cazare = sequelize.define('Cazare', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -26,7 +24,7 @@ const Cazare = sequelize.define('cazare', {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: 'tari',// Numele modelului la care se face referința
+      model: 'Tari',// Numele modelului la care se face referința
       key: 'id',
     },
     onDelete: 'CASCADE',
@@ -46,7 +44,7 @@ const Cazare = sequelize.define('cazare', {
 Cazare.associate = (models) => {
   Cazare.belongsTo(models.Tari, { 
     foreignKey: "id_tara", 
-    as: "tara" 
+    as: "cazari" 
   });
 
   Cazare.belongsTo(models.Localitati, { 
@@ -61,11 +59,5 @@ Cazare.associate = (models) => {
 };
 
 
-// Test sincronizare
-Cazare.sync()
-  .then(
-    // () => console.log('Tabelul cazare a fost sincronizat cu succes.')
-  )
-  .catch((error) => console.error('Eroare la sincronizarea tabelului cazare:', error));
 
 module.exports = Cazare;

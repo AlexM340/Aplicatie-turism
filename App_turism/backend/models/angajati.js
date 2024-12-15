@@ -1,8 +1,9 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = require("../database"); // Importă conexiunea
+const { sequelize } = require("../database"); // Importă conexiunea
+const Pachete = require("./pachete");
 
 const Angajati = sequelize.define(
-  "angajati",
+  "Angajati",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -44,16 +45,7 @@ Angajati.associate = (models) => {
     foreignKey: "id_angajat",
     as: "drepturi",
   });
-  Angajati.hasMany(Pachete, { foreignKey: 'id_angajat', as: 'pachete' });
+  Angajati.hasMany(models.Pachete, { foreignKey: "id_angajat", as: "pachete" });
 };
-
-// Testam sincronizarea
-Angajati.sync()
-  .then
-  // () => console.log('Tabelul angajati a fost sincronizat cu succes.')
-  ()
-  .catch((error) =>
-    console.error("Eroare la sincronizarea tabelului angajati:", error)
-  );
 
 module.exports = Angajati;

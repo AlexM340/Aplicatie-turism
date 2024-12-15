@@ -1,36 +1,37 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../database'); 
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../database'); // Import the sequelize connection
 
-
-const Tari = sequelize.define('tari', {
+const Tari = sequelize.define(
+  'Tari',
+  {
     id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      denumire: {
-        type: Sequelize.STRING(200),
-        allowNull: false,
-      }
-}, {
-  tableName: 'tari',  // Specifică numele corect al tabelei
-});
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    denumire: {
+      type: DataTypes.STRING(200),
+      allowNull: false,
+    },
+  },
+  {
+    tableName: 'tari', // Ensure the table name matches the database table
+  }
+);
+
+// Associations
 Tari.associate = (models) => {
+  // One country can have many cities
   Tari.hasMany(models.Localitati, {
     foreignKey: 'id_tara',
     as: 'localitati',
   });
-  Tari.hasMany(models.Cazare, { 
-    foreignKey: "id_tara", 
-    as: "cazari" 
+
+  // One country can have many accommodations
+  Tari.hasMany(models.Cazare, {
+    foreignKey: 'id_tara',
+    as: 'cazari',
   });
 };
-
-// Test sincronizare
-Tari.sync()
-  .then(
-    // () => console.log('Tabelul tari a fost sincronizat cu succes.')
-  )
-  .catch((error) => console.error('Eroare la sincronizarea tabelului tari:', error));
 
 module.exports = Tari;

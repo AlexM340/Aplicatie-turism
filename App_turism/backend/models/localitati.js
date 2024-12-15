@@ -1,9 +1,9 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = require("../database");
+const {sequelize} = require("../database");
 const Tari = require("./tari"); // Importă modelul tari
 
 const Localitati = sequelize.define(
-  "localitati",
+  "Localitati",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -18,7 +18,7 @@ const Localitati = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: "tari", // Numele modelului la care se face referința
+        model: Tari, // Numele modelului la care se face referința
         key: "id",
       },
       onDelete: "CASCADE",
@@ -53,14 +53,5 @@ Localitati.associate = (models) => {
     as: "cazari",
   });
 };
-
-// Test sincronizare
-Localitati.sync()
-  .then
-  // () => console.log('Tabelul localitati a fost sincronizat cu succes.')
-  ()
-  .catch((error) =>
-    console.error("Eroare la sincronizarea tabelului localitati:", error)
-  );
 
 module.exports = Localitati;

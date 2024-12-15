@@ -9,7 +9,7 @@ const { Camere } = require("../models/camere");
 const { Cazare } = require("../models/cazare");
 const { Pachete } = require("../models/pachete");
 const { Zboruri } = require("../models/zboruri");
-const sequelize = require("../database").sequelize; // Import sequelize correctly
+const {sequelize} = require("../database").sequelize; // Import sequelize correctly
 
 jest.mock("../models/camere", () => ({
   Camere: { findAll: jest.fn() },

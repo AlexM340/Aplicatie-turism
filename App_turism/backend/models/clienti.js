@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../database'); 
+const {sequelize} = require('../database'); 
 
 
-const Clienti = sequelize.define('clienti', {
+const Clienti = sequelize.define('Clienti', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -34,17 +34,11 @@ const Clienti = sequelize.define('clienti', {
 });
 
 Clienti.associate = (models)=>{
-  Clienti.hasOne(models.Client_detalii,{foreignKey:'id_client', as:"clienti_detalii"})
+  Clienti.hasOne(models.Clienti_detalii,{foreignKey:'id_client', as:"clienti_detalii"})
   Clienti.hasMany(models.Rezervari, { 
     foreignKey: "id_client", 
     as: "rezervari" 
   });
 }
-// Test sincronizare
-Clienti.sync()
-  .then(
-    // () => console.log('Tabelul cazare a fost sincronizat cu succes.')
-  )
-  .catch((error) => console.error('Eroare la sincronizarea tabelului cazare:', error));
 
 module.exports = Clienti;

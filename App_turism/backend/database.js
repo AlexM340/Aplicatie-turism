@@ -16,11 +16,20 @@ const sequelize = new Sequelize(
 );
 // console.log(process.env.DB_HOST)
 // Testează conexiunea
-sequelize
-  .authenticate()
-  .then(() =>
-    console.log("Conexiunea la baza de date a fost realizată cu succes.")
-  )
-  .catch((err) => console.error("Nu s-a putut conecta la baza de date:", err));
+const testConnection = async () => {
+  try {
+    await sequelize.authenticate();
+    // console.log("Database connection has been established successfully.");
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+    // throw error; // Propagate the error to be handled by the caller
+  }
+};
+// sequelize
+//   .authenticate()
+//   .then(() =>
+//     console.log("Conexiunea la baza de date a fost realizată cu succes.")
+//   )
+//   .catch((err) => console.error("Nu s-a putut conecta la baza de date:", err));
 
-module.exports = sequelize;
+module.exports = { sequelize, testConnection };

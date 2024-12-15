@@ -1,9 +1,9 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../database'); 
+const {sequelize} = require('../database'); 
 const Rezervari = require('./rezervari'); // Importă modelul rezervari
 
 
-const Tranzactii = sequelize.define('tranzactii', {
+const Tranzactii = sequelize.define('Tranzactii', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -13,7 +13,7 @@ const Tranzactii = sequelize.define('tranzactii', {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'rezervari', // Numele modelului la care se face referința
+          model: Rezervari, // Numele modelului la care se face referința
           key: 'id',
         },
         onDelete: 'CASCADE',
@@ -39,12 +39,5 @@ Tranzactii.associate = (models) => {
     as: "rezervare"  
   });
 };
-
-// Test sincronizare
-Tranzactii.sync()
-  .then(
-    // () => console.log('Tabelul tranzactii a fost sincronizat cu succes.')
-  )
-  .catch((error) => console.error('Eroare la sincronizarea tabelului tranzactii:', error));
 
 module.exports = Tranzactii;

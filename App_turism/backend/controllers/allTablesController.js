@@ -1,8 +1,5 @@
-const { Camere } = require("../models/camere");
-const { Cazare } = require("../models/cazare");
-const { Pachete } = require("../models/pachete"); // Aici a fost un "0" la sfârșit care nu este necesar
-const { Zboruri } = require("../models/zboruri");
-const sequelize = require("../database");
+const {Tari,Cazare,Camere,Pachete,Zboruri} = require("../models");
+const { Op, Sequelize } = require("sequelize");
 
 // Funcție pentru obținerea camerelor
 /**
@@ -57,12 +54,13 @@ const getCazare = async (req, res) => {
 
 const getPachete = async (req, res) => {
   try {
-    //   const pachete = await Pachete.findAll();
-    const pachete = await sequelize.query(
-      "select p.id, c.pret, c.descriere from pachete p left join camere c on p.id_camera=c.id left join zboruri z on z.id = p.id_zbor "
-    );
+    const pachete = await Pachete.findAll();
 
-    console.log(pachete); // Log the results to ensure data is being fetched
+    // const pachete = await sequelize.query(
+    //   "select p.id, c.pret, c.descriere from pachete p left join camere c on p.id_camera=c.id left join zboruri z on z.id = p.id_zbor "
+    // );
+
+    // console.log(pachete); // Log the results to ensure data is being fetched
     res.status(200).json(pachete);
   } catch (err) {
     console.error("Error fetching pachete:", err); // Log errors if they occur
@@ -89,10 +87,53 @@ const getZboruri = async (req, res) => {
     res.status(500).json({ err: "Failed to fetch zboruri" }); // Mesaj de eroare dacă ceva nu merge
   }
 };
+const getTari = async (req,res)=>{
+  try {
+    const dataCurenta = new Date();
+
+
+    // Interogare pentru a aduce tarile care au cazari și camere disponibile în pachete active
+    const tari = await Tari.findAll({
+      include: [{
+        model: Cazare,
+        as:"cazari",
+        attributes:[],
+        include: [{
+          model: Camere,
+          attributes:[],
+          as:"camere",
+          // Filtrăm camerele care fac parte din pachete active
+          include: [{
+            model: Pachete,
+            as: "pachete",
+            attributes:[],
+            // where: {
+            //   data_sosire: { [Op.lte]: dataCurenta },  // Data sosire înainte de data curentă
+            //   data_plecare: { [Op.gte]: dataCurenta }, // Data plecare după data curentă
+            // },
+            required: true,  // Asigurăm că doar cazările cu camere în pachete active vor fi returnate
+          }],
+          required: true, // Asigură că sunt incluse doar camerele care au pachete active
+        }],
+      }],
+      attributes: [
+        'id',
+        'denumire',
+        [Sequelize.fn('min', Sequelize.col('cazari.camere.pret')), 'pret'], // Adaugă prețul minim
+      ],
+      group: ['Tari.id', 'Tari.denumire'],
+    });
+    res.status(200).json(tari);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ err: "Failed to fetch tari" }); // Mesaj de eroare dacă ceva nu merge
+  }
+}
 
 module.exports = {
   getCamere,
   getCazare,
   getPachete,
   getZboruri,
+  getTari
 };
