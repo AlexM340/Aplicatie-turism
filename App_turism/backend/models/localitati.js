@@ -25,7 +25,7 @@ const Localitati = sequelize.define(
     },
     imagine: {
       type: Sequelize.STRING(200),
-      allowNull: false,
+      allowNull: true,
     },
   },
   {

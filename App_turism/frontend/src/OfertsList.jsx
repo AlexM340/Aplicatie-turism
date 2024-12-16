@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import OfertCard from "./OfertCard";
 import { useQuery } from "@tanstack/react-query";
 
