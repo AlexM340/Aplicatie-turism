@@ -1,5 +1,7 @@
 const request = require("supertest");
 const express = require("express");
+const sequelize = require("../database") // Import sequelize correctly
+
 const allTablesRoutes = require("../routes/allTablesRoutes");
 const {
   getCamere,

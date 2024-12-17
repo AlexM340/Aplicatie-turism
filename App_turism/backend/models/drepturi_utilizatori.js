@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const {sequelize} = require("../database");
+const { sequelize } = require("../database");
 const Angajati = require("./angajati"); // Importă modelul angajati
 const Permisiuni = require("./permisiuni"); // Importă modelul permisiuni
 
@@ -35,7 +35,6 @@ const Drepturi_utilizatori = sequelize.define(
     tableName: "drepturi_utilizatori", // Specifică numele corect al tabelei
   }
 );
-
 
 Drepturi_utilizatori.associate = (models) => {
   Drepturi_utilizatori.belongsTo(models.Angajati, {

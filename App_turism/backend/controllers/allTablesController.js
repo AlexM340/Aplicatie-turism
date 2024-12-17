@@ -7,7 +7,7 @@ const { Op, Sequelize } = require("sequelize");
  *
  * Această funcție folosește modelul `Camere` pentru a extrage toate
  * înregistrările din baza de date și le returnează într-un răspuns JSON.
- *
+ * 
  * @param {Object} req - Obiectul de cerere HTTP.
  * @param {Object} res - Obiectul de răspuns HTTP.
  * @returns {void} Returnează un răspuns JSON cu lista camerelor sau un mesaj de eroare.
@@ -26,7 +26,7 @@ const getCamere = async (req, res) => {
  *
  * Această funcție utilizează modelul `Cazare` pentru a extrage toate înregistrările
  * din tabelul asociat și returnează datele sub formă de răspuns JSON
- *
+ * 
  * @param {Object} req - Obiectul cererii HTTP
  * @param {Object} res - Obiectul răspunsului HTTP
  * @returns {void} Răspunsul conține fie lista cazărilor, fie un mesaj de eroare
@@ -46,7 +46,7 @@ const getCazare = async (req, res) => {
  *
  * Această funcție execută o interogare SQL pentru a extrage date despre pachete
  * din tabelele pachete, camere și zboruri, facand join intre tabele
- *
+ * 
  * @param {Object} req - Obiectul cererii HTTP
  * @param {Object} res - Obiectul răspunsului HTTP
  * @returns {void} Răspunsul conține fie lista de pachete, fie un mesaj de eroare
@@ -73,7 +73,7 @@ const getPachete = async (req, res) => {
  *
  * Această funcție utilizează modelul Zboruri pentru a extrage toate înregistrările
  * din tabelul asociat și returnează datele sub formă de răspuns JSON.
- *
+ * 
  * @param {Object} req - Obiectul cererii HTTP
  * @param {Object} res - Obiectul răspunsului HTTP
  * @returns {void} Răspunsul conține fie lista de zboruri, fie un mesaj de eroare

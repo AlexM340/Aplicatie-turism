@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -13,45 +13,77 @@ import { Link } from "react-router-dom";
  */
 const LoginPage = ({ onLogin, errorMessage }) => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [parola, setParola] = useState("");
+  const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onLogin(email, password);
-    navigate("/");
+
+    if (email && parola) {
+      try {
+        // Trimite cererea POST către backend pentru login
+        const response = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            identifier: email, // Poate fi fie email, fie username
+            parola: parola,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          setLoginError(errorData.message || "Invalid credentials");
+          return;
+        }
+
+        // Dacă login-ul a avut succes, salvați token-ul
+        const data = await response.json();
+        onLogin(data.token); // Apelează funcția de login cu token-ul
+        alert("Login successful!");
+        navigate("/dashboard"); // Redirecționează utilizatorul către pagina principală
+      } catch (error) {
+        setLoginError("An error occurred. Please try again.");
+        console.error("Error during login:", error);
+      }
+    } else {
+      setLoginError("Please fill in all fields.");
+    }
   };
 
   return (
     <div className="text-center">
       <h2>Login to Your Account</h2>
-      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+      {loginError && <div className="alert alert-danger">{loginError}</div>}
       <form onSubmit={handleSubmit} className="mt-4">
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
+        <div className="form-floating mb-2">
           <input
-            type="email"
-            id="email"
+            type="text" //am pus text sa se poate da login si cu email
+            id="username"
             className="form-control"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
+          <label htmlFor="username" className="form-label">
+            Username or Email
           </label>
+        </div>
+        <div className="form-floating mb-2">
           <input
             type="password"
             id="password"
             className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={parola}
+            onChange={(e) => setParola(e.target.value)}
             required
           />
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
         </div>
         <button type="submit" className="btn btn-primary">
           Login

@@ -4,6 +4,8 @@ const cors = require("cors"); // Import CORS
 const { testConnection} = require("./database"); // Ensure sequelize connection is established
 const syncDatabase = require("./syncDatabase")
 const path = require("path");
+
+const authRoutes = require('./routes/authRoutes'); 
 require("dotenv").config({
   path: path.resolve(__dirname, "dataBaseSettings.env"),
 });
@@ -17,13 +19,14 @@ app.use(cors());
 
 // Define routes
 app.use("/api", allTablesController); // Make sure allTablesController is correctly configured in routes
+app.use('/api/auth', authRoutes);
 
 
 const startServer = async () => {
   try {
     await testConnection()
 
-    await syncDatabase();
+    // await syncDatabase();
 
     // Start the server
     app.listen(PORT, () => {

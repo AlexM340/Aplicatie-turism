@@ -29,6 +29,7 @@ const Clienti = sequelize.define('Clienti', {
         allowNull: true,
       }
 }, {
+  timestamps: false, // Disable `createdAt` and `updatedAt`
   tableName: 'clienti',  // Specifică numele corect al tabelei
 });
 
