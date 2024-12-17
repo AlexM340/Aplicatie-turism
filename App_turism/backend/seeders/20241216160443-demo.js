@@ -5,20 +5,21 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     /**
      * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-     */
-    try {
+    *
+    * Example:
+    * await queryInterface.bulkInsert('People', [{
+    *   name: 'John Doe',
+    *   isBetaMember: false
+    * }], {});
+    */
+   try {
+      const bcrypt = require('bcrypt')
       await queryInterface.bulkInsert("angajati", [
         {
           id: 1,
           username: "admin",
           nume: "Administrator",
-          parola: "T%r4E#w2",
+          parola: await bcrypt.hash("T%r4E#w2", 10),
           admin: 1,
           data_creare: new Date().toISOString().slice(0, 19).replace("T", " "),
           email: "adrianmascovici@yahoo.com",
@@ -29,7 +30,7 @@ module.exports = {
           id: 2,
           username: "angajat",
           nume: "Angajat",
-          parola: "T%r4E#w2",
+          parola: await bcrypt.hash("T%r4E#w2", 10),
           admin: 0,
           data_creare: new Date().toISOString().slice(0, 19).replace("T", " "),
           email: "angajat@yahoo.com",
@@ -67,7 +68,7 @@ module.exports = {
           id: 1,
           username: "alex",
           nume: "Alex Mascovici",
-          parola: "1234",
+          parola:await bcrypt.hash("1234", 10),
           data_creare: new Date().toISOString().slice(0, 19).replace("T", " "),
           email: "",
           createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
@@ -77,7 +78,7 @@ module.exports = {
           id: 2,
           username: "Danut",
           nume: "Danut Pop",
-          parola: "1234",
+          parola: await bcrypt.hash("1234", 10),
           data_creare: new Date().toISOString().slice(0, 19).replace("T", " "),
           email: "",
           createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
