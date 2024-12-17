@@ -26,7 +26,6 @@ const Clienti = sequelize.define('Clienti', {
       },
       email: {
         type: Sequelize.STRING(200),
-        unique: true,
         allowNull: true,
       }
 }, {

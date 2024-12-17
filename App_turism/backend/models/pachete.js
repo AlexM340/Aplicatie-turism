@@ -40,11 +40,11 @@ const Pachete = sequelize.define(
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
     },
-    data_plecare: {
+    data_checkin: {
       type: Sequelize.DATE,
       allowNull: false,
     },
-    data_sosire: {
+    data_checkout: {
       type: Sequelize.DATE,
       allowNull: false,
     },

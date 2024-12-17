@@ -23,7 +23,7 @@ const startServer = async () => {
   try {
     await testConnection()
 
-    // await syncDatabase();
+    await syncDatabase();
 
     // Start the server
     app.listen(PORT, () => {
