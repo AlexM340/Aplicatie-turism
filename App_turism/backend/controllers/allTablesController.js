@@ -1,4 +1,4 @@
-const {Tari,Cazare,Camere,Pachete,Zboruri} = require("../models");
+const { Tari, Cazare, Camere, Pachete, Zboruri } = require("../models");
 const { Op, Sequelize } = require("sequelize");
 
 // Funcție pentru obținerea camerelor
@@ -7,7 +7,7 @@ const { Op, Sequelize } = require("sequelize");
  *
  * Această funcție folosește modelul `Camere` pentru a extrage toate
  * înregistrările din baza de date și le returnează într-un răspuns JSON.
- * 
+ *
  * @param {Object} req - Obiectul de cerere HTTP.
  * @param {Object} res - Obiectul de răspuns HTTP.
  * @returns {void} Returnează un răspuns JSON cu lista camerelor sau un mesaj de eroare.
@@ -26,7 +26,7 @@ const getCamere = async (req, res) => {
  *
  * Această funcție utilizează modelul `Cazare` pentru a extrage toate înregistrările
  * din tabelul asociat și returnează datele sub formă de răspuns JSON
- * 
+ *
  * @param {Object} req - Obiectul cererii HTTP
  * @param {Object} res - Obiectul răspunsului HTTP
  * @returns {void} Răspunsul conține fie lista cazărilor, fie un mesaj de eroare
@@ -46,7 +46,7 @@ const getCazare = async (req, res) => {
  *
  * Această funcție execută o interogare SQL pentru a extrage date despre pachete
  * din tabelele pachete, camere și zboruri, facand join intre tabele
- * 
+ *
  * @param {Object} req - Obiectul cererii HTTP
  * @param {Object} res - Obiectul răspunsului HTTP
  * @returns {void} Răspunsul conține fie lista de pachete, fie un mesaj de eroare
@@ -73,7 +73,7 @@ const getPachete = async (req, res) => {
  *
  * Această funcție utilizează modelul Zboruri pentru a extrage toate înregistrările
  * din tabelul asociat și returnează datele sub formă de răspuns JSON.
- * 
+ *
  * @param {Object} req - Obiectul cererii HTTP
  * @param {Object} res - Obiectul răspunsului HTTP
  * @returns {void} Răspunsul conține fie lista de zboruri, fie un mesaj de eroare
@@ -87,53 +87,59 @@ const getZboruri = async (req, res) => {
     res.status(500).json({ err: "Failed to fetch zboruri" }); // Mesaj de eroare dacă ceva nu merge
   }
 };
-const getTari = async (req,res)=>{
+const getTari = async (req, res) => {
   try {
     const dataCurenta = new Date();
 
-
     // Interogare pentru a aduce tarile care au cazari și camere disponibile în pachete active
     const tari = await Tari.findAll({
-      include: [{
-        model: Cazare,
-        as:"cazari",
-        attributes:[],
-        include: [{
-          model: Camere,
-          attributes:[],
-          as:"camere",
-          // Filtrăm camerele care fac parte din pachete active
-          include: [{
-            model: Pachete,
-            as: "pachete",
-            attributes:[],
-            // where: {
-            //   data_sosire: { [Op.lte]: dataCurenta },  // Data sosire înainte de data curentă
-            //   data_plecare: { [Op.gte]: dataCurenta }, // Data plecare după data curentă
-            // },
-            required: true,  // Asigurăm că doar cazările cu camere în pachete active vor fi returnate
-          }],
-          required: true, // Asigură că sunt incluse doar camerele care au pachete active
-        }],
-      }],
-      attributes: [
-        'id',
-        'denumire',
-        [Sequelize.fn('min', Sequelize.col('cazari.camere.pret')), 'pret'], // Adaugă prețul minim
+      include: [
+        {
+          model: Cazare,
+          as: "cazari",
+          attributes: [],
+          include: [
+            {
+              model: Camere,
+              attributes: [],
+              as: "camere",
+              // Filtrăm camerele care fac parte din pachete active
+              include: [
+                {
+                  model: Pachete,
+                  as: "pachete",
+                  attributes: [],
+                  // where: {
+                  //   data_sosire: { [Op.lte]: dataCurenta },  // Data sosire înainte de data curentă
+                  //   data_plecare: { [Op.gte]: dataCurenta }, // Data plecare după data curentă
+                  // },
+                  required: true, // Asigurăm că doar cazările cu camere în pachete active vor fi returnate
+                },
+              ],
+              required: true, // Asigură că sunt incluse doar camerele care au pachete active
+            },
+          ],
+          required: true,
+        },
       ],
-      group: ['Tari.id', 'Tari.denumire'],
+      attributes: [
+        "id",
+        "denumire",
+        [Sequelize.fn("min", Sequelize.col("cazari.camere.pret")), "pret"], // Adaugă prețul minim
+      ],
+      group: ["Tari.id", "Tari.denumire"],
     });
     res.status(200).json(tari);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({ err: "Failed to fetch tari" }); // Mesaj de eroare dacă ceva nu merge
   }
-}
+};
 
 module.exports = {
   getCamere,
   getCazare,
   getPachete,
   getZboruri,
-  getTari
+  getTari,
 };

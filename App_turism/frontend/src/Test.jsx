@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginPage from "./LoginPage"; // Import the LoginPage component
 
-const Test = ({ onLogin }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Test = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate(); // To programmatically navigate
 
@@ -28,7 +26,7 @@ const Test = ({ onLogin }) => {
     }
   };
 
-  return <LoginPage onLogin={handleLogin} errorMessage={errorMessage} />;
+  return <LoginPage/>;
 };
 
 export default Test;

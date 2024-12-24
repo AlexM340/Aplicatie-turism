@@ -4,8 +4,9 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
 import Test from "./Test";
 import SignUpPage from "./SignupPage";
+import LoginPage from "./LoginPage";
 
-const Pages = ({ isLoggedIn, onLogin, onLogout }) => {
+const Pages = () => {
   const Pages = [
     {
       path: "home",
@@ -30,7 +31,7 @@ const Pages = ({ isLoggedIn, onLogin, onLogout }) => {
       <Routes>
         <Route
           path="/"
-          element={<Layout isLoggedIn={isLoggedIn} onLogout={onLogout} />}
+          element={<Layout />}
         >
           <Route index element={<LandingPage />} />
           {Pages.map((route, index) => (
@@ -40,8 +41,8 @@ const Pages = ({ isLoggedIn, onLogin, onLogout }) => {
               element={<route.component />}
             />
           ))}
-          <Route path="/login" element={<Test onLogin={onLogin} />} />
-          <Route path="/signup" element={<SignUpPage onSignUp={onLogin} />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
         </Route>
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>

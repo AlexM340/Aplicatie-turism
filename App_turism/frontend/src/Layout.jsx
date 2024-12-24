@@ -1,8 +1,10 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import { Dropdown } from "react-bootstrap"; // Ensure you have react-bootstrap installed
+import { useUser } from "./UserComponent";
 
-const Layout = ({ isLoggedIn, onLogout }) => {
+const Layout = () => {
+  const {user} = useUser()
   return (
     <>
       <aside className="bg-dark text-white">
@@ -33,7 +35,7 @@ const Layout = ({ isLoggedIn, onLogout }) => {
                     Home
                   </Link>
                 </li>
-                {!isLoggedIn ? (
+                {user ? (
                   <>
                     <li className="nav-item">
                       <Link className="nav-link" to="/login">
@@ -57,7 +59,7 @@ const Layout = ({ isLoggedIn, onLogout }) => {
                         <Dropdown.Item as={Link} to="/account">
                           Account
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={onLogout}>Logout</Dropdown.Item>
+                        <Dropdown.Item onClick={user.logout()}>Logout</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </li>
