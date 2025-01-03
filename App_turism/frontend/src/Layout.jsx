@@ -1,10 +1,11 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import { Dropdown } from "react-bootstrap"; // Ensure you have react-bootstrap installed
-import { useUser } from "./UserComponent";
+import { User, useUser } from "./UserComponent";
 
 const Layout = () => {
-  const {user} = useUser()
+  const { user, setUser } = useUser();
+  console.log(user);
   return (
     <>
       <aside className="bg-dark text-white">
@@ -35,7 +36,7 @@ const Layout = () => {
                     Home
                   </Link>
                 </li>
-                {user ? (
+                {!user.client.id ? (
                   <>
                     <li className="nav-item">
                       <Link className="nav-link" to="/login">
@@ -59,7 +60,11 @@ const Layout = () => {
                         <Dropdown.Item as={Link} to="/account">
                           Account
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={user.logout()}>Logout</Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => [user.logout(), setUser(new User())]}
+                        >
+                          Logout
+                        </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </li>

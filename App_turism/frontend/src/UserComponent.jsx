@@ -1,20 +1,9 @@
 import { createContext, useContext, useState } from "react";
 
 export class User {
-  registru = 0;
-  registruNume = "";
-  fullname = "";
-  username = "";
-  departament = "";
-  departamentId = 0;
-  userId = 0;
-  theme = "";
-  isAdmin = 0;
-  primarieDen = "";
-  primarieLoc = "";
-  savelogin = false;
-  userVechi = { id: 0, nume: "", dep: "" };
-  prefix = "";
+  message = "";
+  token = "";
+  client = {};
 
   constructor(config) {
     //console.log("User constructor", this);
@@ -53,7 +42,7 @@ const UserContext = createContext({
 });
 export function UserProvider({ children }) {
   const [user, setUser] = useState(new User());
-  console.log(user)
+  console.log(user);
   // const env =  useEnv()
 
   return (

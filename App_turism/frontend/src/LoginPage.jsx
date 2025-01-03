@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useUser } from "./UserComponent";
+import { User, useUser } from "./UserComponent";
 
 /**
  * LoginPage Component
@@ -16,7 +16,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [parola, setParola] = useState("");
   const [userType, setUserType] = useState(1);
-  const {setUser} = useUser();
+  const { setUser } = useUser();
   const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ const LoginPage = () => {
         // Dacă login-ul a avut succes, salvați token-ul
         const data = await response.json();
         // onLogin(data.token); // Apelează funcția de login cu token-ul
-        setUser(data)
+        setUser(new User(data));
         alert("Login successful!");
         navigate("../"); // Redirecționează utilizatorul către pagina principală
       } catch (error) {
