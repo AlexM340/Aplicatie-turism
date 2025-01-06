@@ -5,9 +5,16 @@ import Layout from "./Layout";
 import Test from "./Test";
 import SignUpPage from "./SignupPage";
 import LoginPage from "./LoginPage";
+import PachetePage from "./PachetePage";
+import CazarePage from "./CazarePage";
+import ZboruriPage from "./ZboruriPage";
 
 const Pages = () => {
   const Pages = [
+    {
+      path: "cazare",
+      component: CazarePage,
+    },
     {
       path: "home",
       component: LandingPage,
@@ -22,17 +29,18 @@ const Pages = () => {
     },
     {
       path: "pachete",
-      component: LandingPage,
+      component: PachetePage,
+    },
+    {
+      path: "zboruri",
+      component: ZboruriPage,
     },
   ];
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        <Route
-          path="/"
-          element={<Layout />}
-        >
+        <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
           {Pages.map((route, index) => (
             <Route

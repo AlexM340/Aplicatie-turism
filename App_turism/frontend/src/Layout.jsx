@@ -18,6 +18,17 @@ const Layout = () => {
                 style={{ width: "40px", height: "auto" }}
               />
             </Link>
+            <div className="d-flex align-items-center ms-3">
+              <Link className="btn btn-outline-light me-2" to="/pachete">
+                Pachete
+              </Link>
+              <Link className="btn btn-outline-light me-2" to="/cazare">
+                Cazare
+              </Link>
+              <Link className="btn btn-outline-light me-2" to="/zboruri">
+                Zboruri
+              </Link>
+            </div>
             <button
               className="navbar-toggler"
               type="button"
@@ -32,19 +43,19 @@ const Layout = () => {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                  <Link className="nav-link" to="/">
+                  <Link className="btn btn-outline-light me-2" to="/">
                     Home
                   </Link>
                 </li>
                 {!user.client.id ? (
                   <>
                     <li className="nav-item">
-                      <Link className="nav-link" to="/login">
+                      <Link className="btn btn-outline-light me-2" to="/login">
                         Login
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link className="nav-link" to="/signup">
+                      <Link className="btn btn-outline-light me-2" to="/signup">
                         Sign Up
                       </Link>
                     </li>
