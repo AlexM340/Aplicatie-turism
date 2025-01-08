@@ -1,10 +1,11 @@
 import React from "react";
 import OfertsList from "./OfertsList";
+import SearchBar from "./SearchBar";
 
 const LandingPage = () => {
   return (
     <div>
-      <h1>Welcome to Our Travel App</h1>
+      <SearchBar/>
       <OfertsList />
     </div>
   );

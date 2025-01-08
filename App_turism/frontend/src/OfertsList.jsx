@@ -1,6 +1,7 @@
-import  { useState } from "react";
+import { useState } from "react";
 import OfertCard from "./OfertCard";
 import { useQuery } from "@tanstack/react-query";
+import { query } from "./query";
 
 /**
  * OfertsList Component
@@ -18,15 +19,10 @@ const OfertsList = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["OfertsList"],
     queryFn: () => {
-      return fetch("http://localhost:5000/api/tari").then((response) => {
-        if (!response.ok) {
-          throw new Error("Eroare la obținerea ofertelor");
-        }
-        return response.json();
-      });
+      return query("api/tari", undefined, "GET");
     },
   });
-  console.log(data)
+  console.log(data);
   if (data && !travelOferts) {
     setTravelOferts(data);
   }
@@ -76,7 +72,7 @@ const OfertsList = () => {
               // image={ofert.image} // Presupunem că ai un câmp `image` în datele din backend
               price={ofert.pret} // Presupunem că ai un câmp `price` în datele din backend
               // location={ofert.location} // Presupunem că ai un câmp `location` în datele din backend
-              description={'foarte tare'} // Presupunem că ai un câmp `description` în datele din backend
+              description={"foarte tare"} // Presupunem că ai un câmp `description` în datele din backend
             />
           </div>
         ))}

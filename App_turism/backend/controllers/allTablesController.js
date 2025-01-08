@@ -1,5 +1,6 @@
 const { Tari, Cazare, Camere, Pachete, Zboruri } = require("../models");
 const { Op, Sequelize } = require("sequelize");
+const Localitati = require("../models/localitati");
 
 // Funcție pentru obținerea camerelor
 /**
@@ -129,12 +130,26 @@ const getTari = async (req, res) => {
       ],
       group: ["Tari.id", "Tari.denumire"],
     });
+    res.set("Content-Type", "application/json");
     res.status(200).json(tari);
   } catch (error) {
     console.log(error);
     res.status(500).json({ err: "Failed to fetch tari" }); // Mesaj de eroare dacă ceva nu merge
   }
 };
+const getOrase = async (req, res) => {
+  try {
+    const dataCurenta = new Date();
+
+    // Interogare pentru a aduce tarile care au cazari și camere disponibile în pachete active
+    const orase = await Localitati.findAll();
+    res.set("Content-Type", "application/json");
+    res.status(200).json(orase);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ err: "Failed to fetch tari" }); // Mesaj de eroare dacă ceva nu merge
+  }
+}
 
 module.exports = {
   getCamere,
@@ -142,4 +157,5 @@ module.exports = {
   getPachete,
   getZboruri,
   getTari,
+  getOrase,
 };

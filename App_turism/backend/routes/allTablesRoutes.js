@@ -6,6 +6,7 @@ const {
   getZboruri,
   getCamere,
   getCazare,
+  getOrase
 } = require("../controllers/allTablesController");
 
 // require("../models/index");
@@ -18,5 +19,6 @@ router.get("/cazare", getCazare);
 router.get("/pachete", getPachete);
 router.get("/zboruri", getZboruri);
 router.get("/tari", getTari);
+router.get("/orase", getOrase);
 
 module.exports = router;
