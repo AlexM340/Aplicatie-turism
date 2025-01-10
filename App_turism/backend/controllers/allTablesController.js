@@ -56,19 +56,64 @@ const getCazare = async (req, res) => {
 
 const getPachete = async (req, res) => {
   try {
-    const pachete = await Pachete.findAll();
+    const pachete = await Pachete.findAll({
+      include: [
+        {
+          model: Camere,
+          as: "camera",
+          attributes: ["pret", "descriere", "nr_persoane"], // Select specific fields from the "camere" table
+          include: [
+            {
+              model: Cazare,
+              as: "cazare",
+              attributes: ["nume", "telefon", "descriere"], // Fields from the "cazare" table
+              include: [
+                {
+                  model: Localitati,
+                  as: "localitate",
+                  attributes: ["denumire"], // Field from the "localitati" table
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: Zboruri,
+          as: "zbor",
+          attributes: [
+            "aeroport_plecare",
+            "aeroport_sosire",
+            "data_plecare",
+            "data_sosire",
+            "companie",
+            "clasa",
+            "pret",
+          ], // Fields from the "zboruri" table
+        },
+      ],
+    });
+    const pacheteCuPret = pachete.map((pachet) => {
+      const dataSosire = moment(pachet.data_checkin);
+      const dataPlecare = moment(pachet.data_checkout);
+      const zileStare = dataPlecare.diff(dataSosire, "days"); // Număr de zile între sosire și plecare
+      console.log(pachet?.camera?.pret);
+      const pretCameraTotal = zileStare * (pachet?.camera?.pret || 0); // Prețul total al camerei
+      const pretTotal = pretCameraTotal + (pachet?.zbor?.pret || 0); // Adăugăm prețul zborului
+      console.log(pretCameraTotal);
 
-    // const pachete = await sequelize.query(
-    //   "select p.id, c.pret, c.descriere from pachete p left join camere c on p.id_camera=c.id left join zboruri z on z.id = p.id_zbor "
-    // );
+      return {
+        ...pachet.toJSON(), // Conversia obiectului Sequelize
+        pret: pretTotal, // Adăugăm prețul total
+      };
+    });
 
-    // console.log(pachete); // Log the results to ensure data is being fetched
-    res.status(200).json(pachete);
+    res.status(200).json(pacheteCuPret);
   } catch (err) {
     console.error("Error fetching pachete:", err); // Log errors if they occur
     res.status(500).json({ err: "Failed to fetch pachete" });
   }
 };
+
 
 /**
  * Obține lista zborurilor din baza de date
@@ -83,7 +128,20 @@ const getPachete = async (req, res) => {
 
 const getZboruri = async (req, res) => {
   try {
-    const zboruri = await Zboruri.findAll(); // Obține toate zborurile din baza de date
+    const zboruri = await Zboruri.findAll({
+      include: [
+        {
+          model: Localitati,
+          as: "localitatePlecare",
+          attributes: ["denumire"],
+        },
+        {
+          model: Localitati,
+          as: "localitateSosire",
+          attributes: ["denumire"],
+        },
+      ]
+    }); // Obține toate zborurile din baza de date
     res.status(200).json(zboruri); // Returnează datele pentru zboruri
   } catch (err) {
     res.status(500).json({ err: "Failed to fetch zboruri" }); // Mesaj de eroare dacă ceva nu merge

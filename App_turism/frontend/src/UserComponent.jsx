@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 export class User {
   message = "";
   token = "";
-  client = {};
+  user = {};
 
   constructor(config) {
     //console.log("User constructor", this);

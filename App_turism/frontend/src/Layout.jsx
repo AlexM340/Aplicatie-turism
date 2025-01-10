@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
-import { Dropdown } from "react-bootstrap"; // Ensure you have react-bootstrap installed
+import { Dropdown } from "react-bootstrap";
 import { User, useUser } from "./UserComponent";
 
 const Layout = () => {
@@ -47,7 +47,7 @@ const Layout = () => {
                     Home
                   </Link>
                 </li>
-                {!user.client.id ? (
+                {!user.user?.id ? (
                   <>
                     <li className="nav-item">
                       <Link className="btn btn-outline-light me-2" to="/login">
@@ -63,8 +63,12 @@ const Layout = () => {
                 ) : (
                   <li className="nav-item">
                     <Dropdown>
-                      <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Guest
+                      <Dropdown.Toggle
+                        variant="success"
+                        id="dropdown-basic"
+                        className="bi bi-person-circle"
+                      >
+                        {user.user?.username}
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu>
@@ -72,7 +76,11 @@ const Layout = () => {
                           Account
                         </Dropdown.Item>
                         <Dropdown.Item
-                          onClick={() => [user.logout(), setUser(new User())]}
+                          onClick={() => [
+                            user.logout(),
+                            setUser(new User()),
+                            (window.location.href = "/"),
+                          ]}
                         >
                           Logout
                         </Dropdown.Item>

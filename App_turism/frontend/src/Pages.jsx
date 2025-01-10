@@ -8,6 +8,7 @@ import LoginPage from "./LoginPage";
 import PachetePage from "./PachetePage";
 import CazarePage from "./CazarePage";
 import ZboruriPage from "./ZboruriPage";
+import Account from "./Account";
 
 const Pages = () => {
   const Pages = [
@@ -34,6 +35,10 @@ const Pages = () => {
     {
       path: "zboruri",
       component: ZboruriPage,
+    },
+    {
+      path: "account",
+      component: Account,
     },
   ];
 

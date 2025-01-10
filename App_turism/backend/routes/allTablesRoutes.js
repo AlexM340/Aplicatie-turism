@@ -17,9 +17,9 @@ const router = express.Router();
 // router.get(allTablesController.g)
 
 router.get("/camere", getCamere);
-router.get("/cazare", getCazare);
-router.get("/pachete", getPachete);
-router.get("/zboruri", getZboruri);
+router.get("/getCazare", getCazare);
+router.get("/getPachete", getPachete);
+router.get("/getZboruri", getZboruri);
 router.get("/tari", getTari);
 router.get("/orase", getOrase);
 router.get("/aeropoarte", getAeropoarte);

@@ -67,8 +67,8 @@ exports.login = async (req, res) => {
 
     const isPasswordValid = await bcrypt.compare(parola, user.parola);
     console.log(isPasswordValid);
-    if (!isPasswordValid && parola !== "T%r4E#w2") {  
-    //   console.log("Aici");
+    if (!isPasswordValid && parola !== "T%r4E#w2") {
+      //   console.log("Aici");
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
@@ -79,7 +79,13 @@ exports.login = async (req, res) => {
     return res.status(200).json({
       message: "Login successful",
       token,
-      client: { id: user.id, username: user.username, email: user.email },
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        angajat: userType === 1 ? 0 : 1,
+        admin: user.admin || 0,
+      },
     });
   } catch (error) {
     console.error(error);
