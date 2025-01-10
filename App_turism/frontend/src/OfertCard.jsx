@@ -12,7 +12,7 @@ import React from "react";
  *
  * @returns {JSX.Element} Un card stilizat cu imagine, informații și un buton.
  */
-const OfertCard = ({ image, price, location, description }) => {
+const OfertCard = ({ image, price, location, description,handleClick }) => {
   return (
     <div className="card h-100">
       <img
@@ -25,9 +25,9 @@ const OfertCard = ({ image, price, location, description }) => {
         <h5 className="card-title">{location}</h5>
         <p className="card-text">{description}</p>
         <p className="text-muted mt-auto">Price: ${price}</p>
-        <a href="#" className="btn btn-primary">
+        <button onClick={()=>handleClick(location)} className="btn btn-primary">
           Book Now
-        </a>
+        </button>
       </div>
     </div>
   );
