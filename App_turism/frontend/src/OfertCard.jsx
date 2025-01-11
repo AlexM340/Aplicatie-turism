@@ -1,34 +1,75 @@
 import React from "react";
-/**
- * OfertCard Component
- *
- * @description Un card care afișează informațiile despre un pachet turistic, inclusiv o imagine,
- * prețul, locația și o descriere. Conține și un buton pentru rezervare.
- *
- * @param {string} props.image - URL-ul imaginii asociate cu pachetul
- * @param {number|string} props.price - Prețul pachetului
- * @param {string} props.location - Locația pachetului
- * @param {string} props.description - Descrierea pachetului turistic
- *
- * @returns {JSX.Element} Un card stilizat cu imagine, informații și un buton.
- */
-const OfertCard = ({ image, price, location, description,handleClick }) => {
+
+const OfertCard = ({
+  image,
+  price,
+  location,
+  description,
+  handleClick,
+  buttonText = "Rezervă",
+  priceText = "Preț",
+}) => {
   return (
-    <div className="card h-100">
+    <div
+      className="card"
+      style={{
+        width: "100%",
+        borderRadius: "10px",
+        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+        marginBottom: "20px",
+        padding: "16px",
+        backgroundColor: "#fff",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "flex-start",
+        position: "relative",
+      }}
+    >
       <img
         src={image}
-        className="card-img-top"
         alt={location}
-        style={{ height: "200px", objectFit: "cover" }}
+        style={{
+          width: "150px",
+          height: "150px",
+          objectFit: "cover",
+          borderRadius: "8px",
+        }}
       />
-      <div className="card-body d-flex flex-column">
-        <h5 className="card-title">{location}</h5>
-        <p className="card-text">{description}</p>
-        <p className="text-muted mt-auto">Price: ${price}</p>
-        <button onClick={()=>handleClick(location)} className="btn btn-primary">
-          Book Now
-        </button>
+      <div
+        className="ms-3"
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        <h5 className="card-title" style={{ marginBottom: "8px" }}>
+          {location}
+        </h5>
+        <p className="card-text" style={{ flexGrow: 1, marginBottom: "8px" }}>
+          {description}
+        </p>
+        <p className="text-muted" style={{ marginBottom: "8px" }}>
+          {priceText}: {price}€
+        </p>
       </div>
+      <button
+        onClick={() => handleClick(location)}
+        className="btn btn-primary"
+        style={{
+          position: "absolute",
+          bottom: "16px",
+          right: "16px",
+          backgroundColor: "#007BFF",
+          border: "none",
+          borderRadius: "5px",
+          padding: "8px 12px",
+          fontSize: "14px",
+        }}
+      >
+        {buttonText}
+      </button>
     </div>
   );
 };
