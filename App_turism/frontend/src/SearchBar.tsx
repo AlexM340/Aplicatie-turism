@@ -215,7 +215,7 @@ const SearchBar = ({ queryParameters, setQueryParameters, handleSearch }) => {
       {/* Butonul de confirmare */}
       <div className="text-center mt-4">
         <button className="btn btn-primary" onClick={handleSearch}>
-          Confirmă și caută
+          Caută
         </button>
       </div>
     </div>

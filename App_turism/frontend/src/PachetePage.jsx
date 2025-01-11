@@ -10,11 +10,28 @@ export const convertDateToISOString = (date) => {
   const day = String(date.getDate()).padStart(2, "0"); // Obținem ziua și adăugăm un zero în față dacă este necesar
   return `${year}-${month}-${day}`; // Concatenăm anul, luna și ziua în formatul dorit (yyyy-mm-dd)
 };
+export const formatData = (date) => {
+  if (!(date instanceof Date)) {
+    throw new Error("Input must be a valid Date object");
+  }
+
+  const pad = (number) => String(number).padStart(2, "0");
+
+  const day = pad(date.getDate());
+  const month = pad(date.getMonth() + 1);
+  const year = date.getFullYear();
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+  const seconds = pad(date.getSeconds());
+
+  return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
+};
+
 const PachetePage = () => {
   const location = useLocation();
   const [queryParameters, setQueryParameters] = useState(() => {
     return location.state && Object.keys(location.state).length
-      ? {...location.state.location}
+      ? { ...location.state.location }
       : {
           destination: { id: 0, denumire: "" },
           departureCity: { id: 0, denumire: "" },
@@ -24,13 +41,13 @@ const PachetePage = () => {
         };
   });
   console.log(queryParameters);
-  
+
   // console.log(location.state);
   // if (Object.keys(location?.state).length) {
   //   setQueryParameters(location.state) ;
   // }
   const { data, isLoading, isRefetching, refetch } = useQuery({
-    queryKey: ["PachetePage", queryParameters],
+    queryKey: ["PachetePage"],
     queryFn: () =>
       query(
         "api/cautarePachete",
@@ -67,6 +84,8 @@ const PachetePage = () => {
                 <th>Locatie</th>
                 <th>Preț</th>
                 <th>Descriere</th>
+                <th>Data check-in</th>
+                <th>Data check-out</th>
               </tr>
             </thead>
             <tbody>
@@ -76,6 +95,8 @@ const PachetePage = () => {
                   <td>{pachet.camera.cazare.localitate.denumire}</td>
                   <td>{pachet.pret}</td>
                   <td>{pachet.camera.cazare.descriere}</td>
+                  <td>{formatData(new Date(pachet.data_checkin))}</td>
+                  <td>{formatData(new Date(pachet.data_checkout))}</td>
                 </tr>
               ))}
             </tbody>

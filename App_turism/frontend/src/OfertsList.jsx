@@ -59,7 +59,7 @@ const OfertsList = () => {
               } // Presupunem că ai un câmp `image` în datele din backend
               price={ofert.pret} // Presupunem că ai un câmp `price` în datele din backend
               location={ofert.denumire} // Presupunem că ai un câmp `location` în datele din backend
-              description={"foarte tare"} // Presupunem că ai un câmp `description` în datele din backend
+              description={"O tara frumoasa"} // Presupunem că ai un câmp `description` în datele din backend
               handleClick={handleClick} // O funcție care se apelează când se face clic pe
             />
           </div>

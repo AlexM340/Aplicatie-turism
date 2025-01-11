@@ -114,7 +114,6 @@ const getPachete = async (req, res) => {
   }
 };
 
-
 /**
  * Obține lista zborurilor din baza de date
  *
@@ -140,7 +139,7 @@ const getZboruri = async (req, res) => {
           as: "localitateSosire",
           attributes: ["denumire"],
         },
-      ]
+      ],
     }); // Obține toate zborurile din baza de date
     res.status(200).json(zboruri); // Returnează datele pentru zboruri
   } catch (err) {
@@ -229,7 +228,6 @@ const getAeropoarte = async (req, res) => {
 };
 const cautarePachete = async (req, res) => {
   try {
-    console.log("AICIIIIII");
     const { destination, departureCity, date, numPersons, tara, tip } =
       req.body;
 
@@ -390,6 +388,98 @@ const cautarePachete = async (req, res) => {
   }
 };
 
+const addPachet = async (req, res) => {
+  try {
+    const { cazare, zbor, data_checkin, data_checkout } = req.body;
+
+    const idCazare = cazare.id || 0;
+    const idZbor = zbor.id || 0;
+    const formattedCheckin = new Date(data_checkin);
+    formattedCheckin.setHours(15, 0, 0, 0); // Setează ora la 15:00:00
+
+    // Adaugă ora 10:00:00 la data_checkout
+    const formattedCheckout = new Date(data_checkout);
+    formattedCheckout.setHours(10, 0, 0, 0); // Setează ora la 10:00:00
+
+    // Creează pachetul
+
+    // Validăm datele necesare
+    if (!idCazare || !data_checkin || !data_checkout) {
+      return res.status(400).json({ err: "Missing required fields" });
+    }
+
+    // Verificăm dacă data_checkin este înainte de data_checkout
+    if (new Date(data_checkin) >= new Date(data_checkout)) {
+      return res
+        .status(400)
+        .json({ err: "Check-in date must be before check-out date" });
+    }
+
+    // Găsim o cameră liberă în cazarea specificată
+    const availableCamera = await Camere.findOne({
+      where: {
+        id_cazare: idCazare,
+      },
+      include: [
+        {
+          model: Pachete,
+          as: "pachete",
+          required: false,
+          where: {
+            // Verificăm dacă există suprapuneri în perioada specificată
+            [Op.or]: [
+              {
+                data_checkin: {
+                  [Op.between]: [data_checkin, data_checkout],
+                },
+              },
+              {
+                data_checkout: {
+                  [Op.between]: [data_checkin, data_checkout],
+                },
+              },
+              {
+                [Op.and]: [
+                  {
+                    data_checkin: {
+                      [Op.lte]: data_checkin,
+                    },
+                  },
+                  {
+                    data_checkout: {
+                      [Op.gte]: data_checkout,
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+    });
+
+    if (!availableCamera) {
+      return res
+        .status(404)
+        .json({ err: "No available camera for the given period" });
+    }
+
+    // Creăm pachetul pentru camera găsită
+    const newPachet = await Pachete.create({
+      id_camera: availableCamera.id,
+      id_zbor: idZbor || null,
+      data_checkin: formattedCheckin,
+      data_checkout: formattedCheckout,
+    });
+
+    // Returnăm pachetul creat
+    res.status(201).json(newPachet);
+  } catch (error) {
+    console.error("Error adding pachet:", error);
+    res.status(500).json({ err: "Failed to add pachet" });
+  }
+};
+
 module.exports = {
   getCamere,
   getCazare,
@@ -399,4 +489,5 @@ module.exports = {
   getOrase,
   getAeropoarte,
   cautarePachete,
+  addPachet,
 };

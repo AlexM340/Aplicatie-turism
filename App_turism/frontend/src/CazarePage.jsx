@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { query } from "./query";
 import SearchBar from "./SearchBar";
 import { useLocation } from "react-router-dom";
+import { formatData } from "./PachetePage";
 
 const CazarePage = () => {
   const location = useLocation();
@@ -55,6 +56,8 @@ const CazarePage = () => {
                 <th>Locatie</th>
                 <th>Preț</th>
                 <th>Descriere</th>
+                <th>Data check-in</th>
+                <th>Data check-out</th>
               </tr>
             </thead>
             <tbody>
@@ -64,6 +67,8 @@ const CazarePage = () => {
                   <td>{pachet.camera.cazare.localitate.denumire}</td>
                   <td>{pachet.pret}</td>
                   <td>{pachet.camera.cazare.descriere}</td>
+                  <td>{formatData(new Date(pachet.data_checkin))}</td>
+                  <td>{formatData(new Date(pachet.data_checkout))}</td>
                 </tr>
               ))}
             </tbody>
