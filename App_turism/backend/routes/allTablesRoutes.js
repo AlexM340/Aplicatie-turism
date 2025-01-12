@@ -1,5 +1,4 @@
 const express = require("express");
-// const allTablesController = require('../controllers/allTablesController');
 const {
   getPachete,
   getTari,
@@ -11,16 +10,18 @@ const {
   cautarePachete,
   getPachetDetails,
   addPachet,
-  addZbor
+  addZbor,
+  getCazareAngajat,
+  addCazare
 } = require("../controllers/allTablesController");
 
 // require("../models/index");
 
 const router = express.Router();
-// router.get(allTablesController.g)
 
 router.get("/camere", getCamere);
 router.get("/getCazare", getCazare);
+router.get("/getCazareAngajat", getCazareAngajat);
 router.get("/getPachete", getPachete);
 router.get("/getZboruri", getZboruri);
 router.get("/tari", getTari);
@@ -29,6 +30,7 @@ router.get("/aeropoarte", getAeropoarte);
 router.post("/cautarePachete", cautarePachete);
 router.post("/addPachet", addPachet);
 router.post("/addZbor", addZbor);
+router.post("/addCazare", addCazare);
 router.post("/cautareZboruri", getZboruri);
 router.get("/pachete/:id", getPachetDetails);
 

@@ -43,6 +43,20 @@ const getCazare = async (req, res) => {
     res.status(500).json({ err: "Failed to fetch cazare" }); // Mesaj de eroare dacă ceva nu merge
   }
 };
+const getCazareAngajat = async (req, res) => {
+  try {
+    const cazare = await Cazare.findAll({
+      include: [{
+        model: Localitati,
+        as: "localitate",
+        attributes: ["denumire"]
+      }]
+    }); // Obține toate cazările din baza de date
+    res.status(200).json(cazare); // Returnează datele pentru cazare
+  } catch (err) {
+    res.status(500).json({ err: "Failed to fetch cazare" }); // Mesaj de eroare dacă ceva nu merge
+  }
+};
 
 /**
  * Obține ID-ul, prețul și descrierea fiecărui pachet
@@ -591,6 +605,38 @@ const addZbor = async (req, res) => {
     res.status(500).json({ error: "A apărut o eroare la adăugarea zborului." });
   }
 };
+const addCazare = async (req, res) => {
+  try {
+    const { nume, telefon, descriere, localitate_id } = req.body;
+
+    // Validare date primite
+    if (!nume || !telefon || !localitate_id) {
+      return res.status(400).json({ error: "Toate câmpurile obligatorii trebuie completate." });
+    }
+
+    // Verificăm dacă localitatea există
+    const localitate = await Localitati.findByPk(localitate_id);
+    if (!localitate) {
+      return res.status(404).json({ error: "Localitatea selectată nu există." });
+    }
+
+    // Creăm cazarea în baza de date
+    const cazareNoua = await Cazare.create({
+      nume,
+      telefon,
+      descriere,
+      localitate_id,
+    });
+
+    res.status(201).json({
+      message: "Cazarea a fost adăugată cu succes.",
+      cazare: cazareNoua,
+    });
+  } catch (error) {
+    console.error("Eroare la adăugarea cazării:", error);
+    res.status(500).json({ error: "A apărut o eroare la server." });
+  }
+};
 
 module.exports = {
   getCamere,
@@ -604,4 +650,6 @@ module.exports = {
   getPachetDetails,
   addPachet,
   addZbor,
+  addCazare,
+  getCazareAngajat,
 };

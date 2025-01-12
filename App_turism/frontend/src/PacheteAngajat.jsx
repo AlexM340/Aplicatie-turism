@@ -23,11 +23,11 @@ const PacheteAngajat = () => {
   // Fetch cazari disponibile
   const { data: cazari, isLoading: isLoadingCazari } = useQuery({
     queryKey: ["Cazari"],
-    queryFn: () => query("api/getCazare", undefined, "GET"), // Endpoint pentru cazări
+    queryFn: () => query("api/getCazare", undefined, "GET"),
   });
   const { data: zboruri, isLoading: isLoadingZboruri } = useQuery({
     queryKey: ["Zboruri"],
-    queryFn: () => query("api/getZboruri", undefined, "GET"), // Endpoint pentru cazări
+    queryFn: () => query("api/getZboruri", undefined, "GET"),
   });
 
   // Handle form submission to add a new package
