@@ -18,6 +18,19 @@ export const convertDateToISOString = (date) => {
   return `${year}-${month}-${day}`;
 };
 
+export const formatData = (date) => {
+  if (!date) return "";
+  const validDate = new Date(date);
+  const day = String(validDate.getDate()).padStart(2, "0");
+  const month = String(validDate.getMonth() + 1).padStart(2, "0");
+  const year = validDate.getFullYear();
+  const hours = String(validDate.getHours()).padStart(2, "0");
+  const minutes = String(validDate.getMinutes()).padStart(2, "0");
+  const seconds = String(validDate.getSeconds()).padStart(2, "0");
+
+  return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
+};
+
 const PachetePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -146,10 +159,8 @@ const PachetePage = () => {
                       location={pachet.camera.cazare.localitate.denumire}
                       description={pachet.camera.cazare.descriere}
                       buttonText="Vizualizare"
-                      checkInDate={convertDateToISOString(pachet.data_checkin)}
-                      checkOutDate={convertDateToISOString(
-                        pachet.data_checkout
-                      )}
+                      checkInDate={formatData(pachet.data_checkin)}
+                      checkOutDate={formatData(pachet.data_checkout)}
                       handleClick={() => handleViewDetails(pachet.id)}
                     />
                   </div>
