@@ -3,14 +3,15 @@ import React, { useState } from "react";
 import { query } from "./query";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { convertDateToISOString, formatData } from "./PachetePage";
 
 const PacheteAngajat = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [newPachet, setNewPachet] = useState({
-    zbor: "", // ID-ul cazării selectate
-    locatie: "",
-    pret: "",
-    data_checkout: "",
+    zbor: { id: 0, denumire: "" },
+    cazare: { id: 0, denumire: "" },
+    data_checkin: new Date(),
+    data_checkout: new Date(),
   });
 
   // Fetch pachete
@@ -32,7 +33,7 @@ const PacheteAngajat = () => {
   // Handle form submission to add a new package
   const handleAddPachet = async () => {
     try {
-      await query("api/addPachet", newPachet, "POST"); // Call the API to add the package
+      await query("api/addPachet", { ...newPachet }, "POST"); // Call the API to add the package
       refetch(); // Refresh the data after adding a new package
       setIsOpen(false); // Close the modal
       setNewPachet({ zbor: "", locatie: "", pret: "", data_checkout: "" }); // Reset the form
@@ -57,6 +58,8 @@ const PacheteAngajat = () => {
                 <th>Locație</th>
                 <th>Preț</th>
                 <th>Descriere</th>
+                <th>Data check-in</th>
+                <th>Data check-out</th>
               </tr>
             </thead>
             <tbody>
@@ -66,6 +69,8 @@ const PacheteAngajat = () => {
                   <td>{pachet.camera.cazare.localitate.denumire}</td>
                   <td>{pachet.pret}</td>
                   <td>{pachet.camera.cazare.descriere}</td>
+                  <td>{formatData(new Date(pachet.data_checkin))}</td>
+                  <td>{formatData(new Date(pachet.data_checkout))}</td>
                 </tr>
               ))}
             </tbody>
@@ -87,10 +92,19 @@ const PacheteAngajat = () => {
               <select
                 id="cazare"
                 className="form-control"
-                value={newPachet.zbor}
-                onChange={(e) =>
-                  setNewPachet({ ...newPachet, zbor: e.target.value })
-                }
+                value={newPachet.cazare?.id}
+                onChange={(e) => {
+                  const selectedCazare = cazari.find(
+                    (cazare) => cazare.id === parseInt(e.target.value)
+                  );
+                  setNewPachet({
+                    ...newPachet,
+                    cazare: {
+                      id: selectedCazare.id,
+                      denumire: selectedCazare.nume,
+                    },
+                  });
+                }}
               >
                 <option value="">Selectați cazarea</option>
                 {!isLoadingCazari &&
@@ -127,7 +141,7 @@ const PacheteAngajat = () => {
                 type="date"
                 id="pret"
                 className="form-control"
-                value={newPachet.data_checkin}
+                value={convertDateToISOString(new Date(newPachet.data_checkin))}
                 onChange={(e) =>
                   setNewPachet({ ...newPachet, data_checkin: e.target.value })
                 }
@@ -139,7 +153,9 @@ const PacheteAngajat = () => {
                 type="date"
                 id="descriere"
                 className="form-control"
-                value={newPachet.data_checkout}
+                value={convertDateToISOString(
+                  new Date(newPachet.data_checkout)
+                )}
                 onChange={(e) =>
                   setNewPachet({ ...newPachet, data_checkout: e.target.value })
                 }

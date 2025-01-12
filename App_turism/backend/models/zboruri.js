@@ -13,11 +13,13 @@ const Zboruri = sequelize.define(
     },
     aeroport_plecare: {
       type: Sequelize.STRING(200),
-      allowNull: false,
+      allowNull: true,
+      defaultValue:""
     },
     aeroport_sosire: {
       type: Sequelize.STRING(200),
-      allowNull: false,
+      allowNull: true,
+      defaultValue:""
     },
     id_loc_plecare: {
       type: Sequelize.INTEGER,

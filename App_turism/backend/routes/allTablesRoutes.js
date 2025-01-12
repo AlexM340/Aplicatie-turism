@@ -8,7 +8,9 @@ const {
   getCazare,
   getOrase,
   getAeropoarte,
-  cautarePachete
+  cautarePachete,
+  addPachet,
+  addZbor
 } = require("../controllers/allTablesController");
 
 // require("../models/index");
@@ -24,5 +26,7 @@ router.get("/tari", getTari);
 router.get("/orase", getOrase);
 router.get("/aeropoarte", getAeropoarte);
 router.post("/cautarePachete", cautarePachete);
+router.post("/addPachet", addPachet);
+router.post("/addZbor", addZbor);
 
 module.exports = router;

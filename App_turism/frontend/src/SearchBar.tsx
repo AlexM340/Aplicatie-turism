@@ -143,7 +143,10 @@ const SearchBar = ({ queryParameters, setQueryParameters, handleSearch }) => {
             className="form-control"
             value={convertDateToISOString(queryParameters.date)}
             onChange={(e) =>
-              setQueryParameters({ ...queryParameters, date: e.target.value })
+              setQueryParameters({
+                ...queryParameters,
+                date: new Date(e.target.value),
+              })
             }
           />
         </div>
@@ -215,7 +218,7 @@ const SearchBar = ({ queryParameters, setQueryParameters, handleSearch }) => {
       {/* Butonul de confirmare */}
       <div className="text-center mt-4">
         <button className="btn btn-primary" onClick={handleSearch}>
-          Confirmă și caută
+          Caută
         </button>
       </div>
     </div>

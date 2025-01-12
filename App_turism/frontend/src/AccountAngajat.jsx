@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PacheteAngajat from "./PacheteAngajat";
+import ZboruriAngajat from "./ZboruriAngajat";
 
 const AccountAngajat = () => {
   const [changeView, setChangeView] = useState(0);
