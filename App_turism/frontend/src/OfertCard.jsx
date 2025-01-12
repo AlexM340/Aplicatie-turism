@@ -9,6 +9,8 @@ const OfertCard = ({
   handleClick,
   buttonText = "Rezervă",
   priceText = "Preț",
+  checkInDate,
+  checkOutDate,
 }) => {
   return (
     <div
@@ -58,6 +60,21 @@ const OfertCard = ({
           {priceText}: {price}€
         </p>
       </div>
+
+      {(checkInDate || checkOutDate) && (
+        <div style={{ marginBottom: "16px", fontSize: "14px", color: "#555" }}>
+          {checkInDate && (
+            <p style={{ margin: 0 }}>
+              <strong>Check-in:</strong> {checkInDate}
+            </p>
+          )}
+          {checkOutDate && (
+            <p style={{ margin: 0 }}>
+              <strong>Check-out:</strong> {checkOutDate}
+            </p>
+          )}
+        </div>
+      )}
       <button
         onClick={() => handleClick(location)}
         className="btn btn-primary"

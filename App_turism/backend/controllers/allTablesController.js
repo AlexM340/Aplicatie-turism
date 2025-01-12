@@ -196,6 +196,71 @@ const getTari = async (req, res) => {
     res.status(500).json({ err: "Failed to fetch tari" }); // Mesaj de eroare dacă ceva nu merge
   }
 };
+
+const getPachetDetails = async (req, res) => {
+  try {
+    const { id } = req.params; // Get the package ID from the route parameters
+
+    const pachet = await Pachete.findOne({
+      where: { id },
+      include: [
+        {
+          model: Camere,
+          as: "camera",
+          attributes: ["pret", "descriere", "nr_persoane"],
+          include: [
+            {
+              model: Cazare,
+              as: "cazare",
+              attributes: ["nume", "telefon", "descriere"],
+              include: [
+                {
+                  model: Localitati,
+                  as: "localitate",
+                  attributes: ["denumire"],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: Zboruri,
+          as: "zbor",
+          attributes: [
+            "aeroport_plecare",
+            "aeroport_sosire",
+            "data_plecare",
+            "data_sosire",
+            "companie",
+            "clasa",
+            "pret",
+          ],
+        },
+      ],
+    });
+
+    if (!pachet) {
+      return res.status(404).json({ error: "Pachet not found" });
+    }
+
+    const dataSosire = moment(pachet.data_checkin);
+    const dataPlecare = moment(pachet.data_checkout);
+    const zileStare = dataPlecare.diff(dataSosire, "days");
+    const pretCameraTotal = zileStare * (pachet?.camera?.pret || 0);
+    const pretTotal = pretCameraTotal + (pachet?.zbor?.pret || 0);
+
+    const result = {
+      ...pachet.toJSON(),
+      pret: pretTotal,
+    };
+
+    res.status(200).json(result);
+  } catch (err) {
+    console.error("Error fetching package details:", err);
+    res.status(500).json({ error: "Failed to fetch package details" });
+  }
+};
+
 const getOrase = async (req, res) => {
   try {
     const orase = await Localitati.findAll();
@@ -536,6 +601,7 @@ module.exports = {
   getOrase,
   getAeropoarte,
   cautarePachete,
+  getPachetDetails,
   addPachet,
   addZbor,
 };

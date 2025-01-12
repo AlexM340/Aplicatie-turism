@@ -9,6 +9,7 @@ import PachetePage from "./PachetePage";
 import CazarePage from "./CazarePage";
 import ZboruriPage from "./ZboruriPage";
 import Account from "./Account";
+import PachetDetailsPage from "./PachetDetailsPage";
 
 const Pages = () => {
   const Pages = [
@@ -56,6 +57,7 @@ const Pages = () => {
           ))}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/pachete/:id" element={<PachetDetailsPage />} />
         </Route>
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
