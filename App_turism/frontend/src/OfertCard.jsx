@@ -3,11 +3,14 @@ import React from "react";
 const OfertCard = ({
   image,
   price,
+  hotelName,
   location,
   description,
   handleClick,
   buttonText = "Rezervă",
   priceText = "Preț",
+  checkInDate,
+  checkOutDate,
 }) => {
   return (
     <div
@@ -45,8 +48,11 @@ const OfertCard = ({
         }}
       >
         <h5 className="card-title" style={{ marginBottom: "8px" }}>
-          {location}
+          {hotelName}
         </h5>
+        <p className="card-text" style={{ flexGrow: 1, marginBottom: "8px" }}>
+          {location}
+        </p>
         <p className="card-text" style={{ flexGrow: 1, marginBottom: "8px" }}>
           {description}
         </p>
@@ -54,6 +60,21 @@ const OfertCard = ({
           {priceText}: {price}€
         </p>
       </div>
+
+      {(checkInDate || checkOutDate) && (
+        <div style={{ marginBottom: "16px", fontSize: "14px", color: "#555" }}>
+          {checkInDate && (
+            <p style={{ margin: 0 }}>
+              <strong>Check-in:</strong> {checkInDate}
+            </p>
+          )}
+          {checkOutDate && (
+            <p style={{ margin: 0 }}>
+              <strong>Check-out:</strong> {checkOutDate}
+            </p>
+          )}
+        </div>
+      )}
       <button
         onClick={() => handleClick(location)}
         className="btn btn-primary"

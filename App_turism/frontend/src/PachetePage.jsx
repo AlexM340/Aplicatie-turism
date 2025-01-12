@@ -1,20 +1,31 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { query } from "./query";
 import SearchBar from "./SearchBar";
 import OfertCard from "./OfertCard";
 
 export const convertDateToISOString = (date) => {
   if (!date) return "";
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
+  const validDate = new Date(date);
+
+  if (isNaN(validDate)) return "";
+
+  const year = validDate.getFullYear();
+  const month = String(validDate.getMonth() + 1).padStart(2, "0");
+  const day = String(validDate.getDate()).padStart(2, "0");
+
   return `${year}-${month}-${day}`;
 };
 
 const PachetePage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleViewDetails = (id) => {
+    navigate(`/pachete/${id}`);
+  };
+
   const [queryParameters, setQueryParameters] = useState(() => {
     return location.state && Object.keys(location.state).length
       ? { ...location.state.location }
@@ -131,12 +142,15 @@ const PachetePage = () => {
                         "https://images.pexels.com/photos/5227434/pexels-photo-5227434.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                       }
                       price={pachet.pret}
+                      hotelName={pachet.camera.cazare.nume}
                       location={pachet.camera.cazare.localitate.denumire}
                       description={pachet.camera.cazare.descriere}
-                      buttonText="Book Now"
-                      handleClick={(location) =>
-                        console.log(`Booking package for: ${location}`)
-                      }
+                      buttonText="Vizualizare"
+                      checkInDate={convertDateToISOString(pachet.data_checkin)}
+                      checkOutDate={convertDateToISOString(
+                        pachet.data_checkout
+                      )}
+                      handleClick={() => handleViewDetails(pachet.id)}
                     />
                   </div>
                 </div>
