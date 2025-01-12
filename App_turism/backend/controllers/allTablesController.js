@@ -2,6 +2,7 @@ const { Tari, Cazare, Camere, Pachete, Zboruri } = require("../models");
 const { Op, Sequelize, where } = require("sequelize");
 const Localitati = require("../models/localitati");
 const moment = require("moment");
+const { group } = require("console");
 
 // Funcție pentru obținerea camerelor
 /**
@@ -197,9 +198,6 @@ const getTari = async (req, res) => {
 };
 const getOrase = async (req, res) => {
   try {
-    const dataCurenta = new Date();
-
-    // Interogare pentru a aduce tarile care au cazari și camere disponibile în pachete active
     const orase = await Localitati.findAll();
     res.set("Content-Type", "application/json");
     res.status(200).json(orase);
@@ -211,6 +209,10 @@ const getOrase = async (req, res) => {
 const getAeropoarte = async (req, res) => {
   try {
     const aeropoarte = await Zboruri.findAll({
+      attributes: [
+        [Sequelize.col("localitatePlecare.denumire"), "denumire"], // Selectăm doar denumirea localității
+        "id_loc_plecare", // Adăugăm acest atribut pentru grupare
+      ],
       include: [
         {
           model: Localitati,
@@ -218,6 +220,7 @@ const getAeropoarte = async (req, res) => {
           attributes: ["denumire"],
         },
       ],
+      group: ["id_loc_plecare"],
     });
     res.set("Content-Type", "application/json");
     res.status(200).json(aeropoarte);
@@ -479,6 +482,50 @@ const addPachet = async (req, res) => {
     res.status(500).json({ err: "Failed to add pachet" });
   }
 };
+const addZbor = async (req, res) => {
+  try {
+    // Extrage datele din request body
+    const {
+      localitatePlecare,
+      localitateSosire,
+      id_tara_plecare,
+      id_tara_sosire,
+      data_plecare,
+      data_sosire,
+      clasa,
+      companie,
+      pret,
+    } = req.body;
+    const idPlecare = localitatePlecare.id || 0;
+    const idSosire = localitateSosire.id || 0;
+
+    // Verifică dacă toate câmpurile necesare sunt prezente
+    if (!idPlecare || !idSosire || !data_plecare || !data_sosire || !pret) {
+      return res
+        .status(400)
+        .json({ error: "Toate câmpurile sunt obligatorii!" });
+    }
+
+    // Creează un nou zbor în baza de date
+    const nouZbor = await Zboruri.create({
+      id_loc_plecare: idPlecare,
+      id_loc_sosire: idSosire,
+      id_tara_plecare: id_tara_plecare,
+      id_tara_sosire: id_tara_sosire,
+      data_plecare: data_plecare,
+      data_sosire: data_sosire,
+      pret: pret,
+      clasa: clasa,
+      companie: companie,
+    });
+
+    // Returnează un răspuns cu zborul creat
+    res.status(201).json({ message: "Zbor adăugat cu succes!", zbor: nouZbor });
+  } catch (error) {
+    console.error("Eroare la adăugarea zborului:", error);
+    res.status(500).json({ error: "A apărut o eroare la adăugarea zborului." });
+  }
+};
 
 module.exports = {
   getCamere,
@@ -490,4 +537,5 @@ module.exports = {
   getAeropoarte,
   cautarePachete,
   addPachet,
+  addZbor,
 };

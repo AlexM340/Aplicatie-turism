@@ -6,10 +6,12 @@ import { formatData } from "./PachetePage";
 const ZboruriAngajat = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newZbor, setNewZbor] = useState({
-    plecare: "",
-    destinatie: "",
+    localitatePlecare: { id: 0, denumire: "" },
+    localitateSosire: { id: 0, denumire: "" },
+    id_tara_plecare: 0,
+    id_tara_sosire: 0,
     data_plecare: "",
-    data_intoarcere: "",
+    data_sosire: "",
     pret: "",
   });
 
@@ -21,6 +23,13 @@ const ZboruriAngajat = () => {
   } = useQuery({
     queryKey: ["ZboruriPage"],
     queryFn: () => query("api/getZboruri", undefined, "GET"),
+  });
+  const {
+    data: localitati,
+    isLoading: isLoadingLocalitati,
+  } = useQuery({
+    queryKey: ["Localitati"],
+    queryFn: () => query("api/orase", undefined, "GET"),
   });
 
   // Add new zbor
@@ -90,27 +99,61 @@ const ZboruriAngajat = () => {
               <div className="modal-body">
                 <div className="form-group">
                   <label htmlFor="plecare">Plecare</label>
-                  <input
-                    type="text"
-                    id="plecare"
+                  <select
+                    id="localitatePlecare"
                     className="form-control"
-                    value={newZbor.plecare}
-                    onChange={(e) =>
-                      setNewZbor({ ...newZbor, plecare: e.target.value })
-                    }
-                  />
+                    value={newZbor.localitatePlecare?.id}
+                    onChange={(e) => {
+                      const selectedLocalitate = localitati.find(
+                        (localitate) => localitate.id === +e.target.value
+                      );
+                      setNewZbor({
+                        ...newZbor,
+                        localitatePlecare: {
+                          id: selectedLocalitate.id,
+                          denumire: selectedLocalitate.denumire,
+                        },
+                        id_tara_plecare: selectedLocalitate.id_tara,
+                      });
+                    }}
+                  >
+                    <option value="">Selectați cazarea</option>
+                    {!isLoadingLocalitati &&
+                      localitati?.map((localitate) => (
+                        <option key={localitate.id} value={localitate.id}>
+                          {localitate.denumire}
+                        </option>
+                      ))}
+                  </select>
                 </div>
                 <div className="form-group">
                   <label htmlFor="destinatie">Destinație</label>
-                  <input
-                    type="text"
-                    id="destinatie"
+                  <select
+                    id="localitateSosire"
                     className="form-control"
-                    value={newZbor.destinatie}
-                    onChange={(e) =>
-                      setNewZbor({ ...newZbor, destinatie: e.target.value })
-                    }
-                  />
+                    value={newZbor.localitateSosire?.id}
+                    onChange={(e) => {
+                      const selectedLocalitate = localitati.find(
+                        (cazare) => cazare.id === +e.target.value
+                      );
+                      setNewZbor({
+                        ...newZbor,
+                        localitateSosire: {
+                          id: selectedLocalitate.id,
+                          denumire: selectedLocalitate.denumire,
+                        },
+                        id_tara_sosire: selectedLocalitate.id_tara,
+                      });
+                    }}
+                  >
+                    <option value="">Selectați cazarea</option>
+                    {!isLoadingLocalitati &&
+                      localitati?.map((localitate) => (
+                        <option key={localitate.id} value={localitate.id}>
+                          {localitate.denumire}
+                        </option>
+                      ))}
+                  </select>
                 </div>
                 <div className="form-group">
                   <label htmlFor="data_plecare">Data Plecare</label>
@@ -125,16 +168,16 @@ const ZboruriAngajat = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="data_intoarcere">Data Întoarcere</label>
+                  <label htmlFor="data_intoarcere">Data Sosire</label>
                   <input
                     type="datetime-local"
                     id="data_intoarcere"
                     className="form-control"
-                    value={newZbor.data_intoarcere}
+                    value={newZbor.data_sosire}
                     onChange={(e) =>
                       setNewZbor({
                         ...newZbor,
-                        data_intoarcere: e.target.value,
+                        data_sosire: e.target.value,
                       })
                     }
                   />
@@ -148,6 +191,28 @@ const ZboruriAngajat = () => {
                     value={newZbor.pret}
                     onChange={(e) =>
                       setNewZbor({ ...newZbor, pret: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="pret">Companie</label>
+                  <input
+                    id="pret"
+                    className="form-control"
+                    value={newZbor.companie}
+                    onChange={(e) =>
+                      setNewZbor({ ...newZbor, companie: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="pret">Clasa</label>
+                  <input
+                    id="pret"
+                    className="form-control"
+                    value={newZbor.clasa}
+                    onChange={(e) =>
+                      setNewZbor({ ...newZbor, clasa: e.target.value })
                     }
                   />
                 </div>

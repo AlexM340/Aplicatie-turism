@@ -143,7 +143,10 @@ const SearchBar = ({ queryParameters, setQueryParameters, handleSearch }) => {
             className="form-control"
             value={convertDateToISOString(queryParameters.date)}
             onChange={(e) =>
-              setQueryParameters({ ...queryParameters, date: e.target.value })
+              setQueryParameters({
+                ...queryParameters,
+                date: new Date(e.target.value),
+              })
             }
           />
         </div>
