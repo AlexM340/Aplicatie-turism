@@ -1,6 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const { sequelize } = require("../database"); // Importă conexiunea
-const Pachete = require("./pachete");
+const { sequelize } = require("../database"); 
 
 const Angajati = sequelize.define(
   "Angajati",
@@ -37,7 +36,7 @@ const Angajati = sequelize.define(
     },
   },
   {
-    tableName: "angajati", // Specifică numele corect al tabelei
+    tableName: "angajati", 
   }
 );
 Angajati.associate = (models) => {

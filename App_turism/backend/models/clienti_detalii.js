@@ -30,7 +30,7 @@ const Clienti_detalii = sequelize.define('Clienti_detalii', {
         allowNull: false,
       }
 }, {
-  tableName: 'clienti_detalii',  // Specifică numele corect al tabelei
+  tableName: 'clienti_detalii', 
 });
 Clienti_detalii.associate = (models) =>{
   Clienti_detalii.belongsTo(models.Clienti,{foreignKey:'id_client', as:"client"})

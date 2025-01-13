@@ -1,7 +1,7 @@
 import React from "react";
-import { useUser } from "./UserComponent";
-import AccountAngajat from "./AccountAngajat";
-import AccountClient from "./AccountClient";
+import { useUser } from "../../UserComponent";
+import AccountAngajat from "./angajat/AccountAngajat";
+import AccountClient from "./client/AccountClient";
 
 const Account = () => {
   const { user } = useUser();

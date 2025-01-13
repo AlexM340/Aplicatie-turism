@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const { sequelize } = require("../database");
-const Angajati = require("./angajati"); // Importă modelul angajati
-const Permisiuni = require("./permisiuni"); // Importă modelul permisiuni
+const Angajati = require("./angajati");
+const Permisiuni = require("./permisiuni"); 
 
 const Drepturi_utilizatori = sequelize.define(
   "Drepturi_utilizatori",
@@ -15,7 +15,7 @@ const Drepturi_utilizatori = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: Angajati, // Numele modelului la care se face referința
+        model: Angajati, 
         key: "id",
       },
       onUpdate: "CASCADE",
@@ -25,14 +25,14 @@ const Drepturi_utilizatori = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: Permisiuni, // Numele modelului la care se face referința
+        model: Permisiuni, 
         key: "id",
       },
       onDelete: "CASCADE",
     },
   },
   {
-    tableName: "drepturi_utilizatori", // Specifică numele corect al tabelei
+    tableName: "drepturi_utilizatori", 
   }
 );
 

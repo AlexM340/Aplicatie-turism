@@ -7,7 +7,6 @@ const AccountAngajat = () => {
   const [changeView, setChangeView] = useState(0);
   return (
     <div className="d-flex">
-      {/* Sidebar */}
       <div
         className=" border-right"
         id="sidebar-wrapper"

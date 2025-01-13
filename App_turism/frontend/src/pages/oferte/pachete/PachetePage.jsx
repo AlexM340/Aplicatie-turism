@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
-import { query } from "./query";
-import SearchBar from "./SearchBar";
-import OfertCard from "./OfertCard";
+import { query } from "../../../utils/query";
+import SearchBar from "../SearchBar";
+import OfertCard from "../OfertCard";
 
 export const convertDateToISOString = (date) => {
   if (!date) return "";
@@ -73,7 +73,6 @@ const PachetePage = () => {
   });
   console.log(location.state?.location);
 
-  // Apply country and price filters
   const filteredData = data?.filter(
     (pachet) =>
       pachet.pret <= queryParameters.maxPrice &&
@@ -93,7 +92,6 @@ const PachetePage = () => {
           handleSearch={() => refetch()}
         />
         <div className="col-md-3">
-          {/* Filter for maximum price */}
           <div className="filter-section">
             <h5>Preț maxim</h5>
             <div className="price-range">
@@ -114,7 +112,6 @@ const PachetePage = () => {
             </div>
           </div>
 
-          {/* Filter for country */}
           <div className="country-filter mt-3">
             <h5>Țara</h5>
             <select
@@ -140,7 +137,6 @@ const PachetePage = () => {
           </div>
         </div>
 
-        {/* Display results */}
         {!isLoading && !isRefetching ? (
           <div className="col-md-9">
             <div className="row">

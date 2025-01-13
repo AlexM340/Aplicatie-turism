@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { query } from "./query";
+import { query } from "../../../utils/query";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
@@ -14,7 +14,6 @@ const CazareAngajat = () => {
     tara: { id: 0, denumire: "" },
   });
 
-  // Fetch cazări
   const {
     data: cazari,
     isLoading: isLoadingCazari,
@@ -24,7 +23,6 @@ const CazareAngajat = () => {
     queryFn: () => query("api/getCazareAngajat", undefined, "GET"),
   });
 
-  // Fetch localități
   const { data: tari, isLoading: isLoadingTari } = useQuery({
     queryKey: ["Tari"],
     queryFn: () => query("api/tari", undefined, "GET"),
@@ -35,7 +33,6 @@ const CazareAngajat = () => {
       query("api/getLocalitati", { id_tara: newCazare.tara.id }, "POST"),
   });
 
-  // Handle form submission to add a new cazare
   const handleAddCazare = async () => {
     try {
       const payload = {
@@ -68,7 +65,6 @@ const CazareAngajat = () => {
         Adaugă cazare
       </Button>
 
-      {/* List of cazari */}
       {!isLoadingCazari ? (
         <div className="row">
           <table className="table">
@@ -96,7 +92,6 @@ const CazareAngajat = () => {
         <div>Loading...</div>
       )}
 
-      {/* Modal for Adding a New Cazare */}
       {isOpen && (
         <Modal show={isOpen} onHide={() => setIsOpen(false)}>
           <Modal.Header closeButton>

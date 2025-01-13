@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const {sequelize} = require("../database");
-const Tari = require("./tari"); // Importă modelul tari
-const Localitati = require("./localitati"); // Importă modelul localitati
+const Tari = require("./tari"); 
+const Localitati = require("./localitati");
 
 const Zboruri = sequelize.define(
   "Zboruri",
@@ -79,11 +79,10 @@ const Zboruri = sequelize.define(
     },
   },
   {
-    tableName: "zboruri", // Asigură-te că numele tabelei este corect
+    tableName: "zboruri",
   }
 );
 Zboruri.associate = (models) => {
-  // Relațiile declarate explicit
   Zboruri.belongsTo(models.Localitati, {
     foreignKey: "id_loc_plecare",
     as: "localitatePlecare",

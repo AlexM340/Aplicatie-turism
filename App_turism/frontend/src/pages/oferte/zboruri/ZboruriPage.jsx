@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { query } from "./query";
+import { query } from "../../../utils/query";
 import ZborCard from "./ZborCard";
 
 const ZboruriPage = () => {
@@ -27,7 +27,6 @@ const ZboruriPage = () => {
     <div className="container mt-4">
       <h1 className="text-center">Zboruri</h1>
 
-      {/* Afișăm cardurile de zboruri */}
       {!isLoading && !isRefetching ? (
         <div className="row">
           {data?.map((zbor, index) => (

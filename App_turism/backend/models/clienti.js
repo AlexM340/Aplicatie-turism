@@ -30,7 +30,7 @@ const Clienti = sequelize.define('Clienti', {
       }
 }, {
   timestamps: true,
-  tableName: 'clienti',  // Specifică numele corect al tabelei
+  tableName: 'clienti',
 });
 
 Clienti.associate = (models)=>{

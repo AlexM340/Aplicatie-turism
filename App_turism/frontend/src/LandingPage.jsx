@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import OfertsList from "./OfertsList";
-import SearchBar from "./SearchBar";
+import OfertsList from "./pages/oferte/OfertsList";
+import SearchBar from "./pages/oferte/SearchBar";
 import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {

@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const {sequelize} = require("../database");
-const Tari = require("./tari"); // Importă modelul tari
+const Tari = require("./tari");
 
 const Localitati = sequelize.define(
   "Localitati",
@@ -18,7 +18,7 @@ const Localitati = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: Tari, // Numele modelului la care se face referința
+        model: Tari,
         key: "id",
       },
       onDelete: "CASCADE",

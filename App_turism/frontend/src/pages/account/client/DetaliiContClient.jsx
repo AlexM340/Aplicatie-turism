@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useUser } from "./UserComponent";
+import { useUser } from "../../../UserComponent";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { query } from "./query";
+import { query } from "../../../utils/query";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -18,7 +18,6 @@ const DetaliiContClient = () => {
     cnp: "",
   });
 
-  // Fetch user details
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["DetaliiContClient", user?.user?.id],
     queryFn: () => query(`api/clienti/${user?.user?.id}`, {}, "GET"),
@@ -41,7 +40,7 @@ const DetaliiContClient = () => {
     try {
       await query(`api/clienti/${user?.user?.id}`, formData, "PUT");
       setShowEditModal(false);
-      refetch(); // Refresh the data
+      refetch();
     } catch (error) {
       console.error("Error updating details:", error);
     }
@@ -85,7 +84,6 @@ const DetaliiContClient = () => {
         </div>
       </div>
 
-      {/* Modal for Editing User Details */}
       {showEditModal && (
         <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
           <Modal.Header closeButton>

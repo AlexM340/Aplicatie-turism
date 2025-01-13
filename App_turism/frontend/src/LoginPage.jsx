@@ -25,14 +25,13 @@ const LoginPage = () => {
 
     if (email && parola) {
       try {
-        // Trimite cererea POST către backend pentru login
         const response = await fetch("http://localhost:5000/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            identifier: email, // Poate fi fie email, fie username
+            identifier: email, 
             parola: parola,
             userType: userType,
           }),
@@ -44,12 +43,10 @@ const LoginPage = () => {
           return;
         }
 
-        // Dacă login-ul a avut succes, salvați token-ul
         const data = await response.json();
-        // onLogin(data.token); // Apelează funcția de login cu token-ul
         setUser(new User(data));
         alert("Login successful!");
-        navigate("../"); // Redirecționează utilizatorul către pagina principală
+        navigate("../");
       } catch (error) {
         setLoginError("An error occurred. Please try again.");
         console.error("Error during login:", error);
@@ -97,7 +94,6 @@ const LoginPage = () => {
                   type="radio"
                   name="userType"
                   id="client"
-                  // value={1}
                   checked={userType === 1}
                   onChange={() => setUserType(1)}
                 />
@@ -111,7 +107,6 @@ const LoginPage = () => {
                   type="radio"
                   name="userType"
                   id="angajat"
-                  // value={2}
                   checked={userType === 2}
                   onChange={() => setUserType(2)}
                   required

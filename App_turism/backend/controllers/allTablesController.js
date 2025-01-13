@@ -2,11 +2,9 @@ const { Tari, Cazare, Camere, Pachete, Zboruri } = require("../models");
 const { Op, Sequelize, where } = require("sequelize");
 const Localitati = require("../models/localitati");
 const moment = require("moment");
-const { group } = require("console");
 const Clienti = require("../models/clienti");
 const Clienti_detalii = require("../models/clienti_detalii");
 
-// Funcție pentru obținerea camerelor
 /**
  * Obtine Camerele din baza de date.
  *
@@ -19,10 +17,10 @@ const Clienti_detalii = require("../models/clienti_detalii");
  */
 const getCamere = async (req, res) => {
   try {
-    const camere = await Camere.findAll(); // Obține toate camerele din baza de date
-    res.status(200).json(camere); // Returnează datele pentru camere
+    const camere = await Camere.findAll();
+    res.status(200).json(camere);
   } catch (err) {
-    res.status(500).json({ err: "Failed to fetch camere" }); // Mesaj de eroare dacă ceva nu merge
+    res.status(500).json({ err: "Failed to fetch camere" });
   }
 };
 
@@ -39,10 +37,10 @@ const getCamere = async (req, res) => {
 
 const getCazare = async (req, res) => {
   try {
-    const cazare = await Cazare.findAll(); // Obține toate cazările din baza de date
-    res.status(200).json(cazare); // Returnează datele pentru cazare
+    const cazare = await Cazare.findAll(); 
+    res.status(200).json(cazare);
   } catch (err) {
-    res.status(500).json({ err: "Failed to fetch cazare" }); // Mesaj de eroare dacă ceva nu merge
+    res.status(500).json({ err: "Failed to fetch cazare" });
   }
 };
 const getCazareAngajat = async (req, res) => {
@@ -55,10 +53,10 @@ const getCazareAngajat = async (req, res) => {
           attributes: ["denumire"],
         },
       ],
-    }); // Obține toate cazările din baza de date
-    res.status(200).json(cazare); // Returnează datele pentru cazare
+    });
+    res.status(200).json(cazare);
   } catch (err) {
-    res.status(500).json({ err: "Failed to fetch cazare" }); // Mesaj de eroare dacă ceva nu merge
+    res.status(500).json({ err: "Failed to fetch cazare" });
   }
 };
 
@@ -80,17 +78,17 @@ const getPachete = async (req, res) => {
         {
           model: Camere,
           as: "camera",
-          attributes: ["pret", "descriere", "nr_persoane"], // Select specific fields from the "camere" table
+          attributes: ["pret", "descriere", "nr_persoane"],
           include: [
             {
               model: Cazare,
               as: "cazare",
-              attributes: ["nume", "telefon", "descriere"], // Fields from the "cazare" table
+              attributes: ["nume", "telefon", "descriere"],
               include: [
                 {
                   model: Localitati,
                   as: "localitate",
-                  attributes: ["denumire"], // Field from the "localitati" table
+                  attributes: ["denumire"], 
                 },
               ],
             },
@@ -107,7 +105,7 @@ const getPachete = async (req, res) => {
             "companie",
             "clasa",
             "pret",
-          ], // Fields from the "zboruri" table
+          ],
         },
       ],
     });
@@ -126,7 +124,7 @@ const getPachete = async (req, res) => {
 
     res.status(200).json(pacheteCuPret);
   } catch (err) {
-    console.error("Error fetching pachete:", err); // Log errors if they occur
+    console.error("Error fetching pachete:", err);
     res.status(500).json({ err: "Failed to fetch pachete" });
   }
 };
@@ -157,17 +155,16 @@ const getZboruri = async (req, res) => {
           attributes: ["denumire"],
         },
       ],
-    }); // Obține toate zborurile din baza de date
-    res.status(200).json(zboruri); // Returnează datele pentru zboruri
+    }); 
+    res.status(200).json(zboruri);
   } catch (err) {
-    res.status(500).json({ err: "Failed to fetch zboruri" }); // Mesaj de eroare dacă ceva nu merge
+    res.status(500).json({ err: "Failed to fetch zboruri" }); 
   }
 };
 const getTari = async (req, res) => {
   try {
     const dataCurenta = new Date();
 
-    // Interogare pentru a aduce tarile care au cazari și camere disponibile în pachete active
     const tari = await Tari.findAll({
       include: [
         {
@@ -179,20 +176,15 @@ const getTari = async (req, res) => {
               model: Camere,
               attributes: [],
               as: "camere",
-              // Filtrăm camerele care fac parte din pachete active
               include: [
                 {
                   model: Pachete,
                   as: "pachete",
                   attributes: [],
-                  // where: {
-                  //   data_sosire: { [Op.lte]: dataCurenta },  // Data sosire înainte de data curentă
-                  //   data_plecare: { [Op.gte]: dataCurenta }, // Data plecare după data curentă
-                  // },
-                  required: true, // Asigurăm că doar cazările cu camere în pachete active vor fi returnate
+                  required: true,
                 },
               ],
-              required: true, // Asigură că sunt incluse doar camerele care au pachete active
+              required: true,
             },
           ],
           required: true,
@@ -209,13 +201,13 @@ const getTari = async (req, res) => {
     res.status(200).json(tari);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ err: "Failed to fetch tari" }); // Mesaj de eroare dacă ceva nu merge
+    res.status(500).json({ err: "Failed to fetch tari" });
   }
 };
 
 const getPachetDetails = async (req, res) => {
   try {
-    const { id } = req.params; // Get the package ID from the route parameters
+    const { id } = req.params;
 
     const pachet = await Pachete.findOne({
       where: { id },
@@ -286,15 +278,15 @@ const getOrase = async (req, res) => {
     res.status(200).json(orase);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ err: "Failed to fetch tari" }); // Mesaj de eroare dacă ceva nu merge
+    res.status(500).json({ err: "Failed to fetch tari" });
   }
 };
 const getAeropoarte = async (req, res) => {
   try {
     const aeropoarte = await Zboruri.findAll({
       attributes: [
-        [Sequelize.col("localitatePlecare.denumire"), "denumire"], // Selectăm doar denumirea localității
-        "id_loc_plecare", // Adăugăm acest atribut pentru grupare
+        [Sequelize.col("localitatePlecare.denumire"), "denumire"],
+        "id_loc_plecare", 
       ],
       include: [
         {
@@ -309,7 +301,7 @@ const getAeropoarte = async (req, res) => {
     res.status(200).json(aeropoarte);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ err: "Failed to fetch tari" }); // Mesaj de eroare dacă ceva nu merge
+    res.status(500).json({ err: "Failed to fetch tari" }); 
   }
 };
 const cautarePachete = async (req, res) => {
@@ -317,72 +309,24 @@ const cautarePachete = async (req, res) => {
     const { destination, departureCity, date, numPersons, tara, tip } =
       req.body;
 
-    // Extract idDestination from destination.id
-    const idDestination = destination?.id || null; // Use null or a default value if destination is undefined
-    const idDepartureCity = departureCity?.id || null; // Use null or a default value if destination is undefined
+    const idDestination = destination?.id || null; 
+    const idDepartureCity = departureCity?.id || null; 
 
-    // console.log(req);
     if (!date || !numPersons) {
       return res
         .status(400)
         .json({ error: "Parametrii 'date' și 'numPersons' sunt obligatorii!" });
     }
-
+    console.log(date);
     const includeFilters = [];
     if (tip !== "cazare") {
       includeFilters.push({
         model: Zboruri,
         as: "zbor",
-        attributes: ["pret", "data_plecare"], // Prețul zborului și data plecării
-        // where: {
-        //   data_plecare: {
-        //     [Op.eq]: date, // Include doar zboruri cu data plecării egală cu cea specificată
-        //   },
-        // },
+        attributes: ["pret", "data_plecare"], 
       });
     }
-    console.log(includeFilters);
-    // if (idDepartureCity) {
-    //   includeFilters.push({
-    //     model: Localitati,
-    //     as: "localitatePlecare",
-    //     attributes: ["denumire"],
-    //     where: { denumire: idDepartureCity },
-    //   });
-    // } else {
-    //   includeFilters.push({
-    //     model: Localitati,
-    //     as: "localitatePlecare",
-    //     attributes: ["denumire"],
-    //   });
-    // }
 
-    // if (idDestination) {
-    //   includeFilters.push({
-    //     model: Cazare,
-    //     as: "cazare",
-    //     include: [
-    //       {
-    //         model: Localitati,
-    //         as: "localitateDestinatie",
-    //         attributes: ["denumire"],
-    //         where: { denumire: idDestination },
-    //       },
-    //     ],
-    //   });
-    // } else {
-    //   includeFilters.push({
-    //     model: Cazare,
-    //     as: "cazare",
-    //     include: [
-    //       {
-    //         model: Localitati,
-    //         as: "localitateDestinatie",
-    //         attributes: ["denumire"],
-    //       },
-    //     ],
-    //   });
-    // }
 
     const pachete = await Pachete.findAll({
       include: [
@@ -390,7 +334,7 @@ const cautarePachete = async (req, res) => {
         {
           model: Camere,
           as: "camera",
-          attributes: ["nr_persoane", "pret"], // Prețul camerei pe noapte
+          attributes: ["nr_persoane", "pret"], 
           include: [
             {
               model: Cazare,
@@ -426,18 +370,6 @@ const cautarePachete = async (req, res) => {
           },
           required: true,
         },
-        // tip !== "cazare"
-        //   ? {
-        //       model: Zboruri,
-        //       as: "zbor",
-        //       attributes: ["pret", "data_plecare"], // Prețul zborului și data plecării
-        //       // where: {
-        //       //   data_plecare: {
-        //       //     [Op.eq]: date,
-        //       //   },
-        //       // },
-        //     }
-        //   : {},
       ],
       where: {
         id_zbor:
@@ -446,26 +378,24 @@ const cautarePachete = async (req, res) => {
                 [Op.eq]: null,
               }
             : { [Op.ne]: null },
-        // data_checkin: {
-        //   [Op.gt]: date,
-        // },
+        data_checkin: {
+          [Op.gt]: new Date(date),
+        },
       },
     });
-    console.log(pachete);
 
-    // Calculăm prețul total pentru fiecare pachet
     const pacheteCuPret = pachete.map((pachet) => {
       const dataSosire = moment(pachet.data_checkin);
       const dataPlecare = moment(pachet.data_checkout);
-      const zileStare = dataPlecare.diff(dataSosire, "days"); // Număr de zile între sosire și plecare
+      const zileStare = dataPlecare.diff(dataSosire, "days") + 1;
       console.log(pachet?.camera?.pret);
-      const pretCameraTotal = zileStare * (pachet?.camera?.pret || 0); // Prețul total al camerei
-      const pretTotal = pretCameraTotal + (pachet?.zbor?.pret || 0); // Adăugăm prețul zborului
+      const pretCameraTotal = zileStare * (pachet?.camera?.pret || 0);
+      const pretTotal = pretCameraTotal + (pachet?.zbor?.pret || 0);
       console.log(pretCameraTotal);
 
       return {
-        ...pachet.toJSON(), // Conversia obiectului Sequelize
-        pret: pretTotal, // Adăugăm prețul total
+        ...pachet.toJSON(),
+        pret: pretTotal,
       };
     });
 
@@ -484,27 +414,21 @@ const addPachet = async (req, res) => {
     const idCazare = cazare.id || 0;
     const idZbor = zbor.id || 0;
     const formattedCheckin = new Date(data_checkin);
-    formattedCheckin.setHours(15, 0, 0, 0); // Setează ora la 15:00:00
+    formattedCheckin.setHours(15, 0, 0, 0);
 
-    // Adaugă ora 10:00:00 la data_checkout
     const formattedCheckout = new Date(data_checkout);
-    formattedCheckout.setHours(10, 0, 0, 0); // Setează ora la 10:00:00
+    formattedCheckout.setHours(10, 0, 0, 0);
 
-    // Creează pachetul
-
-    // Validăm datele necesare
     if (!idCazare || !data_checkin || !data_checkout) {
       return res.status(400).json({ err: "Missing required fields" });
     }
 
-    // Verificăm dacă data_checkin este înainte de data_checkout
     if (new Date(data_checkin) >= new Date(data_checkout)) {
       return res
         .status(400)
         .json({ err: "Check-in date must be before check-out date" });
     }
 
-    // Găsim o cameră liberă în cazarea specificată
     const availableCamera = await Camere.findOne({
       where: {
         id_cazare: idCazare,
@@ -515,7 +439,6 @@ const addPachet = async (req, res) => {
           as: "pachete",
           required: false,
           where: {
-            // Verificăm dacă există suprapuneri în perioada specificată
             [Op.or]: [
               {
                 data_checkin: {
@@ -553,7 +476,6 @@ const addPachet = async (req, res) => {
         .json({ err: "No available camera for the given period" });
     }
 
-    // Creăm pachetul pentru camera găsită
     const newPachet = await Pachete.create({
       id_camera: availableCamera.id,
       id_zbor: idZbor || null,
@@ -561,7 +483,6 @@ const addPachet = async (req, res) => {
       data_checkout: formattedCheckout,
     });
 
-    // Returnăm pachetul creat
     res.status(201).json(newPachet);
   } catch (error) {
     console.error("Error adding pachet:", error);
@@ -570,7 +491,6 @@ const addPachet = async (req, res) => {
 };
 const addZbor = async (req, res) => {
   try {
-    // Extrage datele din request body
     const {
       localitatePlecare,
       localitateSosire,
@@ -585,14 +505,12 @@ const addZbor = async (req, res) => {
     const idPlecare = localitatePlecare.id || 0;
     const idSosire = localitateSosire.id || 0;
 
-    // Verifică dacă toate câmpurile necesare sunt prezente
     if (!idPlecare || !idSosire || !data_plecare || !data_sosire || !pret) {
       return res
         .status(400)
         .json({ error: "Toate câmpurile sunt obligatorii!" });
     }
 
-    // Creează un nou zbor în baza de date
     const nouZbor = await Zboruri.create({
       id_loc_plecare: idPlecare,
       id_loc_sosire: idSosire,
@@ -605,7 +523,6 @@ const addZbor = async (req, res) => {
       companie: companie,
     });
 
-    // Returnează un răspuns cu zborul creat
     res.status(201).json({ message: "Zbor adăugat cu succes!", zbor: nouZbor });
   } catch (error) {
     console.error("Eroare la adăugarea zborului:", error);
@@ -616,14 +533,12 @@ const addCazare = async (req, res) => {
   try {
     const { nume, telefon, descriere, localitate_id, id_tara } = req.body;
 
-    // Validare date primite
     if (!nume || !telefon || !localitate_id) {
       return res
         .status(400)
         .json({ error: "Toate câmpurile obligatorii trebuie completate." });
     }
 
-    // Verificăm dacă localitatea există
     const localitate = await Localitati.findByPk(localitate_id);
     if (!localitate) {
       return res
@@ -631,7 +546,6 @@ const addCazare = async (req, res) => {
         .json({ error: "Localitatea selectată nu există." });
     }
 
-    // Creăm cazarea în baza de date
     const cazareNoua = await Cazare.create({
       nume,
       telefon,
@@ -651,24 +565,23 @@ const addCazare = async (req, res) => {
 };
 const getLocalitati = async (req, res) => {
   try {
-    const { id_tara } = req.body; // Extrage parametrul id_tara din URL
+    const { id_tara } = req.body;
 
     if (!id_tara) {
       return res.status(400).json({ error: "id_tara is required" });
     }
 
-    // Selectează localitățile din țara specificată
     const localitati = await Localitati.findAll({
       where: {
-        id_tara: id_tara, // Condiția pentru a selecta localitățile
+        id_tara: id_tara,
       },
-      attributes: ["id", "denumire"], // Selectează doar câmpurile relevante
+      attributes: ["id", "denumire"],
     });
 
-    res.status(200).json(localitati); // Returnează localitățile în format JSON
+    res.status(200).json(localitati);
   } catch (error) {
     console.error("Error fetching localitati:", error);
-    res.status(500).json({ error: "Failed to fetch localitati" }); // Mesaj de eroare în caz de eșec
+    res.status(500).json({ error: "Failed to fetch localitati" });
   }
 };
 
@@ -688,7 +601,6 @@ const getClientById = async (req, res) => {
         },
       ],
       where: { id },
-      // attributes: ["id", "nume", "email", "telefon", "adresa"],
     });
 
     if (!client) {

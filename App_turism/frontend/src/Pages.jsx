@@ -1,15 +1,14 @@
 import React, { Suspense } from "react";
 import LandingPage from "./LandingPage";
 import { Route, Routes } from "react-router-dom";
-import Layout from "./Layout";
-import Test from "./Test";
-import SignUpPage from "./SignupPage";
+import Layout from "./layout/Layout";
 import LoginPage from "./LoginPage";
-import PachetePage from "./PachetePage";
-import CazarePage from "./CazarePage";
-import ZboruriPage from "./ZboruriPage";
-import Account from "./Account";
-import PachetDetailsPage from "./PachetDetailsPage";
+import CazarePage from "./pages/oferte/cazare/CazarePage";
+import Account from "./pages/account/Account";
+import DetaliuPachetPage from "./pages/oferte/pachete/detaliuPachet/DetaliuPachetPage";
+import PachetePage from "./pages/oferte/pachete/PachetePage";
+import ZboruriPage from "./pages/oferte/zboruri/ZboruriPage";
+import SignUpPage from "./SignUpPage";
 
 const Pages = () => {
   const Pages = [
@@ -57,7 +56,7 @@ const Pages = () => {
           ))}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/pachete/:id" element={<PachetDetailsPage />} />
+          <Route path="/pachete/:id" element={<DetaliuPachetPage />} />
         </Route>
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>

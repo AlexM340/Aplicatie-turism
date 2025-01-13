@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../database'); // Import the sequelize connection
-const Pachete = require('./pachete'); // Import the 'Pachete' model
-const Clienti = require('./clienti'); // Import the 'Clienti' model
+const { sequelize } = require('../database'); 
+const Pachete = require('./pachete'); 
+const Clienti = require('./clienti'); 
 
 const Rezervari = sequelize.define(
   'Rezervari',
@@ -15,7 +15,7 @@ const Rezervari = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Pachete, // Referencing 'pachete' model
+        model: Pachete,
         key: 'id',
       },
       onDelete: 'CASCADE',
@@ -24,18 +24,17 @@ const Rezervari = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model:Clienti, // Referencing 'clienti' model
+        model:Clienti,
         key: 'id',
       },
       onDelete: 'CASCADE',
     },
   },
   {
-    tableName: 'rezervari', // Ensure correct table name
+    tableName: 'rezervari', 
   }
 );
 
-// Associations
 Rezervari.associate = (models) => {
   Rezervari.belongsTo(models.Pachete, {
     foreignKey: 'id_pachet',
@@ -47,7 +46,6 @@ Rezervari.associate = (models) => {
     as: 'client',
   });
 
-  // Assuming you have a 'Tranzactii' model for transaction details related to reservations
   Rezervari.hasMany(models.Tranzactii, {
     foreignKey: 'id_rezervare',
     as: 'tranzactii',

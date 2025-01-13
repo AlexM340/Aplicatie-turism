@@ -1,18 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { query } from "./query";
+import { query } from "../../utils/query";
 import { useNavigate } from "react-router-dom";
-import { convertDateToISOString } from "./PachetePage";
+import { convertDateToISOString } from "./pachete/PachetePage";
 
 const SearchBar = ({ queryParameters, setQueryParameters, handleSearch }) => {
-  const navigate = useNavigate();
   const [activeDropdown, setActiveDropdown] = useState(null);
-
-  //   const [queryParameters.destination, setDestination] = useState({ id: 0, denumire: "" });
-  //   const [queryParameters.departureCity, setDepartureCity] = useState({ id: 0, denumire: "" });
-  //   const [date, setDepartureDate] = useState("");
-  //   const [queryParameters.numAdults, setNumAdults] = useState(2);
-  //   const [queryParameters.numChildren, setNumChildren] = useState(0);
 
   const { data: orase } = useQuery({
     queryKey: ["Orase"],
@@ -28,15 +21,16 @@ const SearchBar = ({ queryParameters, setQueryParameters, handleSearch }) => {
     },
     refetchOnWindowFocus: false,
   });
+
   const handleOpenDropdown = (dropdown) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
   const handleSelectOption = (dropdown, value) => {
     setQueryParameters({ ...queryParameters, [dropdown]: value });
-    // if (dropdown === "numPersons") setNumPersons(value);
-    setActiveDropdown(null); // închide dropdown-ul
+    setActiveDropdown(null);
   };
+
   const increment = (type) => {
     setQueryParameters({
       ...queryParameters,
@@ -51,24 +45,20 @@ const SearchBar = ({ queryParameters, setQueryParameters, handleSearch }) => {
     });
   };
 
-  //   const handleClick = () => {
-  //     try {
-  //       navigate("/pachete", {
-  //         state: {
-  //           destination: queryParameters.destination,
-  //           departureCity: queryParameters.departureCity,
-  //           departureDate: queryParameters.date,
-  //           numAdults: queryParameters.numAdults,
-  //           numChildren: queryParameters.numChildren,
-  //         },
-  //       });
-  //     } catch (error) {}
-  //   };
+  const resetFilters = () => {
+    setQueryParameters({maxPrice:6000,
+      destination: null,
+      departureCity: null,
+      date: new Date(),
+      numAdults: 2,
+      numChildren: 0,
+    });
+    setActiveDropdown(null);
+  };
 
   return (
     <div className="container py-4">
       <div className="row g-3">
-        {/* Unde mergi */}
         <div className="col-md-3">
           <button
             className="btn btn-outline-primary w-100"
@@ -104,7 +94,6 @@ const SearchBar = ({ queryParameters, setQueryParameters, handleSearch }) => {
           )}
         </div>
 
-        {/* De la */}
         <div className="col-md-3">
           <button
             className="btn btn-outline-primary w-100"
@@ -136,7 +125,6 @@ const SearchBar = ({ queryParameters, setQueryParameters, handleSearch }) => {
           )}
         </div>
 
-        {/* Când vei pleca */}
         <div className="col-md-3">
           <input
             type="date"
@@ -151,7 +139,6 @@ const SearchBar = ({ queryParameters, setQueryParameters, handleSearch }) => {
           />
         </div>
 
-        {/* Câte persoane */}
         <div className="col-md-3">
           <button
             className="btn btn-outline-primary w-100"
@@ -215,10 +202,12 @@ const SearchBar = ({ queryParameters, setQueryParameters, handleSearch }) => {
         </div>
       </div>
 
-      {/* Butonul de confirmare */}
       <div className="text-center mt-4">
-        <button className="btn btn-primary" onClick={handleSearch}>
+        <button className="btn btn-primary me-2" onClick={handleSearch}>
           Caută
+        </button>
+        <button className="btn btn-danger" onClick={resetFilters}>
+          Resetează filtrele
         </button>
       </div>
     </div>

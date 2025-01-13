@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const {sequelize} = require("../database"); // Importă conexiunea
+const {sequelize} = require("../database");
 const Camere = require("./camere");
 const Zboruri = require("./zboruri");
 const Pachete = sequelize.define(
@@ -14,7 +14,7 @@ const Pachete = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: true,
       references: {
-        model:Camere, // Numele modelului la care se face referința
+        model:Camere,
         key: "id",
       },
       onUpdate: "CASCADE",
@@ -24,7 +24,7 @@ const Pachete = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: true,
       references: {
-        model: Zboruri, // Numele modelului la care se face referința
+        model: Zboruri,
         key: "id",
       },
       onUpdate: "CASCADE",
@@ -34,7 +34,7 @@ const Pachete = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: true,
       references: {
-        model: "angajati", // Numele modelului la care se face referința
+        model: "angajati",
         key: "id",
       },
       onUpdate: "CASCADE",
@@ -58,12 +58,11 @@ const Pachete = sequelize.define(
     }
   },
   {
-    tableName: "pachete", // Asigură-te că numele tabelei este corect
+    tableName: "pachete",
   }
 );
 
 Pachete.associate = (models) => {
-  // Un pachet poate avea mai multe rezervări
   Pachete.hasMany(models.Rezervari, {
     foreignKey: "id_pachet",
     as: "rezervari",
@@ -73,7 +72,6 @@ Pachete.associate = (models) => {
     as: "camera",
   });
 
-  // Un pachet are un zbor asociat
   Pachete.belongsTo(models.Zboruri, {
     foreignKey: "id_zbor",
     as: "zbor",

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import OfertCard from "./OfertCard";
 import { useQuery } from "@tanstack/react-query";
-import { query } from "./query";
+import { query } from "../../utils/query";
 import { useNavigate } from "react-router-dom";
 
 const countryImages = {
@@ -30,13 +30,12 @@ const countryImages = {
 
 const OfertsList = () => {
   const navigate = useNavigate();
-  const [travelOferts, setTravelOferts] = useState([]); // Make sure to initialize with an empty array
+  const [travelOferts, setTravelOferts] = useState([]);
   const { data, isLoading, error } = useQuery({
     queryKey: ["OfertsList"],
     queryFn: () => query("api/tari", undefined, "GET"),
   });
 
-  // Set travelOferts only once when data is available
   useEffect(() => {
     if (data) {
       setTravelOferts(data);

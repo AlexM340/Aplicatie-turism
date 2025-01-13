@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
     }
 );
 // console.log(process.env.DB_HOST)
-// Testează conexiunea
+
 const testConnection = async () => {
   try {
     await sequelize.authenticate();
@@ -23,11 +23,5 @@ const testConnection = async () => {
     // throw error; // Propagate the error to be handled by the caller
   }
 };
-// sequelize
-//   .authenticate()
-//   .then(() =>
-//     console.log("Conexiunea la baza de date a fost realizată cu succes.")
-//   )
-//   .catch((err) => console.error("Nu s-a putut conecta la baza de date:", err));
 
 module.exports = { sequelize, testConnection };

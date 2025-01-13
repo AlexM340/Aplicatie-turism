@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { query } from "./query";
-import SearchBar from "./SearchBar";
-import OfertCard from "./OfertCard"; // Import the OfertCard component
+import { query } from "../../../utils/query";
+import SearchBar from "../SearchBar";
+import OfertCard from "../OfertCard"; 
+import { formatData } from "../pachete/PachetePage";
 
 const cazareImages = {
   "Hotel Elena":
@@ -118,8 +119,8 @@ const CazarePage = () => {
                   setQueryParameters({
                     ...queryParameters,
                     country: selectedCountry,
-                    countryId: selectedCountryId, // Stochează și ID-ul țării
-                    location: "", // Resetează localitatea
+                    countryId: selectedCountryId,
+                    location: "", 
                   });
                 }}
                 className="form-select"
@@ -172,12 +173,15 @@ const CazarePage = () => {
                         cazareImages.Default
                       }
                       price={cazare.pret}
-                      location={cazare.camera.cazare.nume}
-                      description={cazare.camera.cazare.localitate.denumire}
+                      hotelName={cazare.camera.cazare.nume}
+                      location={`${cazare.camera.cazare.localitate.denumire}, ${cazare.camera.cazare.localitate.tara.denumire}`}
+                      description={cazare.camera.cazare.descriere}
                       buttonText="Rezervă"
                       handleClick={(location) =>
                         console.log(`Booking hotel for: ${location}`)
                       }
+                      checkInDate={formatData(new Date(cazare.data_checkin))}
+                      checkOutDate={formatData(new Date(cazare.data_checkout))}
                     />
                   </div>
                 </div>

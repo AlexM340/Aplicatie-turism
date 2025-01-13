@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { query } from "./query";
+import { query } from "../../../utils/query";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { convertDateToISOString, formatData } from "./PachetePage";
+import { convertDateToISOString, formatData } from "../../oferte/pachete/PachetePage";
 
 const PacheteAngajat = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,14 +13,12 @@ const PacheteAngajat = () => {
     data_checkin: new Date(),
     data_checkout: new Date(),
   });
-
-  // Fetch pachete
+  console.log(newPachet);
   const { data, isLoading, isRefetching, refetch } = useQuery({
     queryKey: ["PachetePage"],
     queryFn: () => query("api/getPachete", undefined, "GET"),
   });
 
-  // Fetch cazari disponibile
   const { data: cazari, isLoading: isLoadingCazari } = useQuery({
     queryKey: ["Cazari"],
     queryFn: () => query("api/getCazare", undefined, "GET"),
@@ -30,7 +28,6 @@ const PacheteAngajat = () => {
     queryFn: () => query("api/getZboruri", undefined, "GET"),
   });
 
-  // Handle form submission to add a new package
   const handleAddPachet = async () => {
     try {
       await query("api/addPachet", { ...newPachet }, "POST"); // Call the API to add the package
@@ -80,7 +77,6 @@ const PacheteAngajat = () => {
         <div>Loading...</div>
       )}
 
-      {/* Modal for Adding a New Package */}
       <Modal show={isOpen} onHide={() => setIsOpen(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Adaugă Pachet</Modal.Title>
@@ -120,10 +116,11 @@ const PacheteAngajat = () => {
               <select
                 id="zbor"
                 className="form-control"
-                value={newPachet.zbor}
-                onChange={(e) =>
-                  setNewPachet({ ...newPachet, zbor: e.target.value })
-                }
+                value={newPachet.zbor.id}
+                onChange={(e) => {
+                  const zborSelected = zboruri.find((zbor)=>zbor.id===+e.target.value)
+                  setNewPachet({ ...newPachet, zbor: zborSelected });
+                }}
               >
                 <option value="">Selectați zborul</option>
                 {!isLoadingCazari &&

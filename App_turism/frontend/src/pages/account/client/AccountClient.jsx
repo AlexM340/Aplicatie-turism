@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import PacheteAngajat from "./PacheteAngajat";
-import ZboruriAngajat from "./ZboruriAngajat";
-import CazareAngajat from "./CazareAngajat";
 import DetaliiContClient from "./DetaliiContClient";
+import RezervariClient from "./RezervariClient";
 
 const AccountClient = () => {
   const [changeView, setChangeView] = useState(0);
   return (
     <div className="d-flex">
-      {/* Sidebar */}
       <div
         className=" border-right"
         id="sidebar-wrapper"
@@ -33,11 +30,9 @@ const AccountClient = () => {
         (changeView === 1 ? (
           <DetaliiContClient />
         ) : changeView === 2 ? (
-          <CazareAngajat />
-        ) : changeView === 3 ? (
-          <ZboruriAngajat />
+          <RezervariClient />
         ) : (
-          <Rapoarte />
+          <></>
         ))}
     </div>
   );

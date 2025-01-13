@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
-import { User, useUser } from "./UserComponent";
+import { User, useUser } from "../UserComponent";
 
 const Layout = () => {
   const { user, setUser } = useUser();

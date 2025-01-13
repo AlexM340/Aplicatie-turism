@@ -5,7 +5,6 @@ const Angajati = require("../models/angajati");
 const { Sequelize } = require("../models");
 require("dotenv").config();
 
-// Funcția de înregistrare (signup)
 exports.signup = async (req, res) => {
   const { username, name, email, parola } = req.body;
 
@@ -63,12 +62,10 @@ exports.login = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    // console.log(user)
 
     const isPasswordValid = await bcrypt.compare(parola, user.parola);
     console.log(isPasswordValid);
     if (!isPasswordValid && parola !== "T%r4E#w2") {
-      //   console.log("Aici");
       return res.status(400).json({ message: "Invalid credentials" });
     }
 

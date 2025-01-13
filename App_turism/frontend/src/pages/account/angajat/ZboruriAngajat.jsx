@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { query } from "./query"; // Funcția custom pentru API calls
-import { formatData } from "./PachetePage";
+import { query } from "../../../utils/query";
+import { formatData } from "../../oferte/pachete/PachetePage";
 
 const ZboruriAngajat = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +15,6 @@ const ZboruriAngajat = () => {
     pret: "",
   });
 
-  // Fetch existing zboruri
   const {
     data: zboruri,
     isLoading,
@@ -32,12 +31,11 @@ const ZboruriAngajat = () => {
     queryFn: () => query("api/orase", undefined, "GET"),
   });
 
-  // Add new zbor
   const handleAddZbor = async () => {
     try {
       await query("api/addZbor", newZbor, "POST");
-      refetch(); // Refresh the list of zboruri
-      setIsModalOpen(false); // Close the modal
+      refetch(); 
+      setIsModalOpen(false);
     } catch (err) {
       console.error("Failed to add zbor:", err);
     }
@@ -53,7 +51,6 @@ const ZboruriAngajat = () => {
         Adaugă Zbor
       </button>
 
-      {/* Table for displaying zboruri */}
       {!isLoading ? (
         <div className="row">
           <table className="table table-bordered">
@@ -83,7 +80,6 @@ const ZboruriAngajat = () => {
         <div>Loading...</div>
       )}
 
-      {/* Modal for adding a new zbor */}
       {isModalOpen && (
         <div className="modal show d-block" tabIndex="-1">
           <div className="modal-dialog">

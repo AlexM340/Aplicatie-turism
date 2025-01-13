@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Modal, Button, Card, ListGroup } from "react-bootstrap";
-import { query } from "./query";
-import { convertDateToISOString, formatData } from "./PachetePage";
+import { query } from "../../../../utils/query";
+import { convertDateToISOString, formatData } from "../PachetePage";
 
-const PachetDetailsPage = () => {
+const DetaliuPachetPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -42,7 +42,6 @@ const PachetDetailsPage = () => {
     <div className="container-fluid d-flex flex-column vh-100 p-0">
       <h1 className="text-center mb-4">{camera.cazare.nume}</h1>
       <div className="row flex-grow-1 m-0">
-        {/* Secțiunea cu imaginea principală */}
         <div className="col-md-6 p-0">
           <img
             src={
@@ -51,7 +50,7 @@ const PachetDetailsPage = () => {
             alt={camera.cazare.nume}
             style={{
               width: "100%",
-              height: "90vh", // Adjusted image size
+              height: "90vh",
               objectFit: "cover",
             }}
           />
@@ -74,7 +73,6 @@ const PachetDetailsPage = () => {
               </ListGroup>
             </Card>
 
-            {/* Detalii Cazare */}
             <Card className="mb-4 shadow-sm rounded">
               <Card.Header>
                 <h4>Detalii Cazare</h4>
@@ -111,7 +109,6 @@ const PachetDetailsPage = () => {
               </ListGroup>
             </Card>
 
-            {/* Detalii Zbor */}
             {zbor && (
               <Card className="mb-4 shadow-sm rounded">
                 <Card.Header>
@@ -140,7 +137,6 @@ const PachetDetailsPage = () => {
             )}
           </div>
 
-          {/* Buttons aligned above the bottom */}
           <div
             className="d-flex justify-content-end p-4"
             style={{ marginTop: "auto", marginBottom: "90px" }}
@@ -163,7 +159,6 @@ const PachetDetailsPage = () => {
         </div>
       </div>
 
-      {/* Modal Rezervare */}
       <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>Confirmare Rezervare</Modal.Title>
@@ -185,4 +180,4 @@ const PachetDetailsPage = () => {
   );
 };
 
-export default PachetDetailsPage;
+export default DetaliuPachetPage;

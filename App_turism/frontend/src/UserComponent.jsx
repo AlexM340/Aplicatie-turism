@@ -6,7 +6,6 @@ export class User {
   user = {};
 
   constructor(config) {
-    //console.log("User constructor", this);
     if (config) {
       Object.assign(this, config);
       // localStorage.setItem('userContext', JSON.stringify(config));
@@ -31,7 +30,6 @@ export class User {
     //   await query('user/logOut',{});
   }
   get validate() {
-    // check if user is logged in
     return !!localStorage.getItem("userContext");
   }
 }
@@ -43,7 +41,6 @@ const UserContext = createContext({
 export function UserProvider({ children }) {
   const [user, setUser] = useState(new User());
   console.log(user);
-  // const env =  useEnv()
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

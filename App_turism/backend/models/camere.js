@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const {sequelize} = require("../database"); // Importă conexiunea
+const {sequelize} = require("../database");
 const Cazare = require("./cazare");
 
 const Camere = sequelize.define(
@@ -14,7 +14,7 @@ const Camere = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: Cazare, // Numele modelului la care se face referința
+        model: Cazare,
         key: "id",
       },
       onUpdate: "CASCADE",
@@ -34,7 +34,7 @@ const Camere = sequelize.define(
     },
   },
   {
-    tableName: "Camere", // Specifică numele corect al tabelei
+    tableName: "Camere",
   }
 );
 Camere.associate = (models) => {

@@ -24,7 +24,7 @@ const Cazare = sequelize.define('Cazare', {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: 'Tari',// Numele modelului la care se face referința
+      model: 'Tari',
       key: 'id',
     },
     onDelete: 'CASCADE',
@@ -33,13 +33,13 @@ const Cazare = sequelize.define('Cazare', {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: 'localitati',// Numele modelului la care se face referința
+      model: 'localitati',
       key: 'id',
     },
     onDelete: 'CASCADE',
   }
 }, {
-  tableName: 'cazare',  // Specifică numele corect al tabelei
+  tableName: 'cazare',  
 });
 Cazare.associate = (models) => {
   Cazare.belongsTo(models.Tari, { 

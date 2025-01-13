@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const {sequelize} = require('../database'); 
-const Rezervari = require('./rezervari'); // Importă modelul rezervari
+const Rezervari = require('./rezervari');
 
 
 const Tranzactii = sequelize.define('Tranzactii', {
@@ -13,7 +13,7 @@ const Tranzactii = sequelize.define('Tranzactii', {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: Rezervari, // Numele modelului la care se face referința
+          model: Rezervari,
           key: 'id',
         },
         onDelete: 'CASCADE',
@@ -31,7 +31,7 @@ const Tranzactii = sequelize.define('Tranzactii', {
         allowNull: false,
       }
 }, {
-  tableName: 'tranzactii',  // Specifică numele corect al tabelei
+  tableName: 'tranzactii', 
 });
 Tranzactii.associate = (models) => {
   Tranzactii.belongsTo(models.Rezervari, { 

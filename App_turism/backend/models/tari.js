@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const { sequelize } = require("../database"); // Import the sequelize connection
+const { sequelize } = require("../database"); 
 
 const Tari = sequelize.define(
   "Tari",
@@ -15,19 +15,16 @@ const Tari = sequelize.define(
     },
   },
   {
-    tableName: "tari", // Ensure the table name matches the database table
+    tableName: "tari", 
   }
 );
 
-// Associations
 Tari.associate = (models) => {
-  // One country can have many cities
   Tari.hasMany(models.Localitati, {
     foreignKey: "id_tara",
     as: "localitati",
   });
 
-  // One country can have many accommodations
   Tari.hasMany(models.Cazare, {
     foreignKey: "id_tara",
     as: "cazari",

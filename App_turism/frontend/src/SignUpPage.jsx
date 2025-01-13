@@ -28,18 +28,15 @@ const SignUpPage = () => {
         });
 
         if (!response.ok) {
-          // Gestionare erori de la server
           const errorData = await response.json();
           setErrorMessage(errorData.message || "Sign up failed");
           return;
         }
 
-        // Dacă înregistrarea are succes
         const data = await response.json();
         alert("Sign up successful!");
-        navigate("/"); // Redirecționează utilizatorul
+        navigate("/"); 
       } catch (error) {
-        // Gestionare erori de rețea sau de cod
         setErrorMessage("An error occurred. Please try again.");
         console.error("Error during signup:", error);
       }

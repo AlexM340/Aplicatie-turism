@@ -16,7 +16,7 @@ const Permisiuni = sequelize.define('Permisiuni', {
         allowNull: false,
       }
 }, {
-  tableName: 'permisiuni',  // Specifică numele corect al tabelei
+  tableName: 'permisiuni', 
 });
 Permisiuni.associate = (models) => {
   Permisiuni.hasMany(models.Drepturi_utilizatori, {
