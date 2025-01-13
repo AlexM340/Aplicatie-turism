@@ -1,6 +1,7 @@
 import React from "react";
 import { useUser } from "./UserComponent";
 import AccountAngajat from "./AccountAngajat";
+import AccountClient from "./AccountClient";
 
 const Account = () => {
   const { user } = useUser();
@@ -9,7 +10,7 @@ const Account = () => {
       <AccountAngajat />
     </div>
   ) : (
-    <div>Client</div>
+    <AccountClient />
   );
 };
 

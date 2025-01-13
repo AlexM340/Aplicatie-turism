@@ -3,6 +3,8 @@ const { Op, Sequelize, where } = require("sequelize");
 const Localitati = require("../models/localitati");
 const moment = require("moment");
 const { group } = require("console");
+const Clienti = require("../models/clienti");
+const Clienti_detalii = require("../models/clienti_detalii");
 
 // Funcție pentru obținerea camerelor
 /**
@@ -46,11 +48,13 @@ const getCazare = async (req, res) => {
 const getCazareAngajat = async (req, res) => {
   try {
     const cazare = await Cazare.findAll({
-      include: [{
-        model: Localitati,
-        as: "localitate",
-        attributes: ["denumire"]
-      }]
+      include: [
+        {
+          model: Localitati,
+          as: "localitate",
+          attributes: ["denumire"],
+        },
+      ],
     }); // Obține toate cazările din baza de date
     res.status(200).json(cazare); // Returnează datele pentru cazare
   } catch (err) {
@@ -110,15 +114,13 @@ const getPachete = async (req, res) => {
     const pacheteCuPret = pachete.map((pachet) => {
       const dataSosire = moment(pachet.data_checkin);
       const dataPlecare = moment(pachet.data_checkout);
-      const zileStare = dataPlecare.diff(dataSosire, "days"); // Număr de zile între sosire și plecare
-      console.log(pachet?.camera?.pret);
-      const pretCameraTotal = zileStare * (pachet?.camera?.pret || 0); // Prețul total al camerei
-      const pretTotal = pretCameraTotal + (pachet?.zbor?.pret || 0); // Adăugăm prețul zborului
-      console.log(pretCameraTotal);
+      const zileStare = dataPlecare.diff(dataSosire, "days") + 1;
+      const pretCameraTotal = zileStare * (pachet?.camera?.pret || 0);
+      const pretTotal = pretCameraTotal + (pachet?.zbor?.pret || 0);
 
       return {
-        ...pachet.toJSON(), // Conversia obiectului Sequelize
-        pret: pretTotal, // Adăugăm prețul total
+        ...pachet.toJSON(),
+        pret: pretTotal,
       };
     });
 
@@ -259,9 +261,11 @@ const getPachetDetails = async (req, res) => {
 
     const dataSosire = moment(pachet.data_checkin);
     const dataPlecare = moment(pachet.data_checkout);
-    const zileStare = dataPlecare.diff(dataSosire, "days");
+    const zileStare = dataPlecare.diff(dataSosire, "days") + 1;
     const pretCameraTotal = zileStare * (pachet?.camera?.pret || 0);
     const pretTotal = pretCameraTotal + (pachet?.zbor?.pret || 0);
+
+    console.log(zileStare);
 
     const result = {
       ...pachet.toJSON(),
@@ -607,17 +611,21 @@ const addZbor = async (req, res) => {
 };
 const addCazare = async (req, res) => {
   try {
-    const { nume, telefon, descriere, localitate_id } = req.body;
+    const { nume, telefon, descriere, localitate_id, id_tara } = req.body;
 
     // Validare date primite
     if (!nume || !telefon || !localitate_id) {
-      return res.status(400).json({ error: "Toate câmpurile obligatorii trebuie completate." });
+      return res
+        .status(400)
+        .json({ error: "Toate câmpurile obligatorii trebuie completate." });
     }
 
     // Verificăm dacă localitatea există
     const localitate = await Localitati.findByPk(localitate_id);
     if (!localitate) {
-      return res.status(404).json({ error: "Localitatea selectată nu există." });
+      return res
+        .status(404)
+        .json({ error: "Localitatea selectată nu există." });
     }
 
     // Creăm cazarea în baza de date
@@ -625,7 +633,8 @@ const addCazare = async (req, res) => {
       nume,
       telefon,
       descriere,
-      localitate_id,
+      id_loc: localitate_id,
+      id_tara,
     });
 
     res.status(201).json({
@@ -635,6 +644,86 @@ const addCazare = async (req, res) => {
   } catch (error) {
     console.error("Eroare la adăugarea cazării:", error);
     res.status(500).json({ error: "A apărut o eroare la server." });
+  }
+};
+const getLocalitati = async (req, res) => {
+  try {
+    const { id_tara } = req.body; // Extrage parametrul id_tara din URL
+
+    if (!id_tara) {
+      return res.status(400).json({ error: "id_tara is required" });
+    }
+
+    // Selectează localitățile din țara specificată
+    const localitati = await Localitati.findAll({
+      where: {
+        id_tara: id_tara, // Condiția pentru a selecta localitățile
+      },
+      attributes: ["id", "denumire"], // Selectează doar câmpurile relevante
+    });
+
+    res.status(200).json(localitati); // Returnează localitățile în format JSON
+  } catch (error) {
+    console.error("Error fetching localitati:", error);
+    res.status(500).json({ error: "Failed to fetch localitati" }); // Mesaj de eroare în caz de eșec
+  }
+};
+
+const getClientById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ error: "ID-ul clientului este necesar." });
+    }
+
+    const client = await Clienti.findOne({
+      include: [
+        {
+          model: Clienti_detalii,
+          as: "clienti_detalii",
+        },
+      ],
+      where: { id },
+      // attributes: ["id", "nume", "email", "telefon", "adresa"],
+    });
+
+    if (!client) {
+      return res.status(404).json({ error: "Clientul nu a fost găsit." });
+    }
+
+    res.status(200).json(client);
+  } catch (error) {
+    console.error("Eroare la fetch-ul detaliilor clientului:", error);
+    res.status(500).json({ error: "A apărut o problemă la server." });
+  }
+};
+const updateClient = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nume, email, telefon, adresa, cnp } = req.body;
+
+    const client = await Clienti.findOne({ where: { id } });
+    const clienti_detalii = await Clienti_detalii.findOne({
+      where: { id_client: id },
+    });
+
+    if (!client) {
+      return res.status(404).json({ error: "Clientul nu a fost găsit." });
+    }
+    if (!clienti_detalii) {
+      return res
+        .status(404)
+        .json({ error: "Detaliile clientului nu au fost găsite." });
+    }
+
+    await client.update({ nume, email });
+    await clienti_detalii.update({ telefon, adresa, cnp });
+
+    res.status(200).json({ message: "Client actualizat cu succes." });
+  } catch (error) {
+    console.error("Eroare la actualizarea clientului:", error);
+    res.status(500).json({ error: "A apărut o problemă la server." });
   }
 };
 
@@ -652,4 +741,7 @@ module.exports = {
   addZbor,
   addCazare,
   getCazareAngajat,
+  getLocalitati,
+  getClientById,
+  updateClient,
 };

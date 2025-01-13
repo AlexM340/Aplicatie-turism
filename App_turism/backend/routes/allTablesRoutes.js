@@ -12,7 +12,10 @@ const {
   addPachet,
   addZbor,
   getCazareAngajat,
-  addCazare
+  addCazare,
+  getLocalitati,
+  getClientById,
+  updateClient
 } = require("../controllers/allTablesController");
 
 // require("../models/index");
@@ -32,6 +35,9 @@ router.post("/addPachet", addPachet);
 router.post("/addZbor", addZbor);
 router.post("/addCazare", addCazare);
 router.post("/cautareZboruri", getZboruri);
+router.post("/getLocalitati", getLocalitati);
 router.get("/pachete/:id", getPachetDetails);
+router.get("/clienti/:id", getClientById);
+router.put("/clienti/:id", updateClient);
 
 module.exports = router;

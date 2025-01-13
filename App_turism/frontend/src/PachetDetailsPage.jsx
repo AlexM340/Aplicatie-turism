@@ -84,13 +84,23 @@ const PachetDetailsPage = () => {
                   <strong>Tip cameră:</strong> {camera.descriere}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <strong>Preț cameră:</strong> {camera.pret}€
+                  <strong>Preț cameră/noapte:</strong> {camera.pret}€
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <strong>Check-in:</strong> {formatData(data_checkin)}
+                  <strong>Check-in:</strong>{" "}
+                  {formatData(new Date(data_checkin))}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <strong>Check-out:</strong> {formatData(data_checkout)}
+                  <strong>Check-out:</strong>{" "}
+                  {formatData(new Date(data_checkout))}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Numar nopti</strong>{" "}
+                  {Math.ceil(
+                    (new Date(data_checkout).getTime() -
+                      new Date(data_checkin).getTime()) /
+                      (1000 * 60 * 60 * 24)
+                  )}
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>Număr maxim de persoane:</strong> {camera.nr_persoane}
@@ -117,7 +127,7 @@ const PachetDetailsPage = () => {
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <strong>Ora Plecare:</strong>{" "}
-                    {formatData(zbor.data_plecare).slice(11, 19)}
+                    {formatData(new Date(zbor.data_plecare)).slice(11, 19)}
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <strong>Aeroport Plecare:</strong> {zbor.aeroport_plecare}
