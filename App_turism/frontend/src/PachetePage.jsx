@@ -49,10 +49,9 @@ const PachetePage = () => {
           numAdults: 2,
           numChildren: 0,
           maxPrice: 6000,
-          country: "",
+          country: { id: 0, denumire: "" },
         };
   });
-
   const { data: tari } = useQuery({
     queryKey: ["Tari"],
     queryFn: () => query("api/tari", {}, "GET"),
@@ -72,14 +71,15 @@ const PachetePage = () => {
         "POST"
       ),
   });
+  console.log(location.state?.location);
 
   // Apply country and price filters
   const filteredData = data?.filter(
     (pachet) =>
       pachet.pret <= queryParameters.maxPrice &&
-      (queryParameters.country
+      (queryParameters.country?.denumire
         ? pachet.camera.cazare.localitate.tara.denumire ===
-          queryParameters.country
+          queryParameters.country?.denumire
         : true)
   );
 
@@ -118,9 +118,11 @@ const PachetePage = () => {
           <div className="country-filter mt-3">
             <h5>Țara</h5>
             <select
-              value={queryParameters.country}
+              value={queryParameters.country?.id}
               onChange={(e) => {
-                const selectedCountry = e.target.value;
+                const selectedCountry = tari.find(
+                  (tara) => tara.id === parseInt(e.target.value)
+                );
                 setQueryParameters({
                   ...queryParameters,
                   country: selectedCountry,
@@ -128,9 +130,9 @@ const PachetePage = () => {
               }}
               className="form-select"
             >
-              <option value="">Selectează țara</option>
+              <option value={0}>Selectează țara</option>
               {tari?.map((tara) => (
-                <option key={tara.id} value={tara.denumire}>
+                <option key={tara.id} value={tara.id}>
                   {tara.denumire}
                 </option>
               ))}

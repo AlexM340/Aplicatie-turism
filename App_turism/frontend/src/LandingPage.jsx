@@ -13,7 +13,7 @@ const LandingPage = () => {
     numChildren: 0,
   });
   const handleSearch = () => {
-    navigate("/pachete", { state: { location: queryParameters } });
+    navigate("/pachete", { state: { location: {...queryParameters,maxPrice:6000} } });
   };
   console.log(queryParameters);
 

@@ -1,7 +1,7 @@
 export const query = (query, params, method = "POST") => {
     // console.log(query)
     return new Promise((resolve, reject) => {
-        console.log(query)
+        // console.log(query)
       fetch(`http://localhost:5000/${query}`, {
         method,
         headers: {

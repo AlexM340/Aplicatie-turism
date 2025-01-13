@@ -446,6 +446,9 @@ const cautarePachete = async (req, res) => {
                 [Op.eq]: null,
               }
             : { [Op.ne]: null },
+        // data_checkin: {
+        //   [Op.gt]: date,
+        // },
       },
     });
     console.log(pachete);

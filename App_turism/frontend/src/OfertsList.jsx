@@ -44,6 +44,7 @@ const OfertsList = () => {
   }, [data]);
 
   const handleClick = (location) => {
+    const country = data.find((country) => country.denumire === location);
     navigate("/pachete", {
       state: {
         location: {
@@ -52,7 +53,8 @@ const OfertsList = () => {
           date: new Date(),
           numAdults: 2,
           numChildren: 0,
-          tara: location,
+          country: country,
+          maxPrice: 6000,
         },
       },
     });
@@ -71,7 +73,7 @@ const OfertsList = () => {
               image={countryImages[ofert.denumire] || countryImages.Default}
               price={ofert.pret}
               location={ofert.denumire}
-              description={"foarte tare"} // Adjust description accordingly
+              description={"foarte frumos"}
               handleClick={handleClick}
               buttonText="Descoperă"
               priceText="Prețuri de la"
